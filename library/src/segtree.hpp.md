@@ -31,10 +31,22 @@ layout: default
 
 * category: <a href="../../index.html#eae30ef778b4136fdcc54087b7400598">segtree</a>
 * <a href="{{ site.github.repository_url }}/blob/master/src/segtree.hpp">View this file on GitHub</a>
-    - Last commit date: 2020-05-01 02:03:02+09:00
+    - Last commit date: 2020-05-01 02:26:10+09:00
 
 
 * see: <a href="https://twitter.com/ngtkana">https://twitter.com/ngtkana</a>
+
+
+## すごいぞセグツリー
+
+segtree(sz)
+size()
+fold(l, r)
+set(i, x)
+lazy_set(i, x)
+build()
+to_vec()
+
 
 
 ## Verified with
@@ -139,6 +151,7 @@ template <class Monoid> struct segtree{
  * @category segtree
  * @brief so nice
  * @see https://twitter.com/ngtkana
+ * @docs docs/segtree.md
  */
 
 ```
@@ -240,6 +253,7 @@ template <class Monoid> struct segtree{
  * @category segtree
  * @brief so nice
  * @see https://twitter.com/ngtkana
+ * @docs docs/segtree.md
  */
 
 ```
