@@ -90,4 +90,5 @@ template <class Monoid> struct segtree{
  * @category segtree
  * @brief so nice
  * @see https://twitter.com/ngtkana
+ * @docs docs/segtree.md
  */
