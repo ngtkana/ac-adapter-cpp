@@ -40,11 +40,13 @@ layout: default
 
 * :heavy_check_mark: <a href="dinic.hpp.html">Dinic</a>
 * :heavy_check_mark: <a href="ford_fulkerson.hpp.html">Ford−Fulkerson</a>
+* :heavy_check_mark: <a href="relabel_to_front.hpp.html">Push-relabel by Relabel-to-front selection</a>
 
 
 ## Verified with
 
 * :heavy_check_mark: <a href="../../../verify/test/aoj-grl-6-a-1.test.cpp.html">test/aoj-grl-6-a-1.test.cpp</a>
+* :heavy_check_mark: <a href="../../../verify/test/aoj-grl-6-a-2.test.cpp.html">test/aoj-grl-6-a-2.test.cpp</a>
 * :heavy_check_mark: <a href="../../../verify/test/aoj-grl-6-a.test.cpp.html">test/aoj-grl-6-a.test.cpp</a>
 
 
