@@ -40,7 +40,7 @@ layout: default
 ## Depends on
 
 * :heavy_check_mark: <a href="../../library/graph/flow/flow_edge.hpp.html">graph/flow/flow_edge.hpp</a>
-* :heavy_check_mark: <a href="../../library/graph/flow/relabel_to_front.hpp.html">Push-relabel by Relabel-to-front selection</a>
+* :heavy_check_mark: <a href="../../library/graph/flow/relabel_to_front.hpp.html">Push-relabel by Relabel-to-front selection rule</a>
 
 
 ## Code
@@ -223,9 +223,10 @@ template <class Flow> struct relabel_to_front {
 };
 
 /*
- * @title Push-relabel by Relabel-to-front selection
+ * @title Push-relabel by Relabel-to-front selection rule
  * @category graph
  * @category flow
+ * @docs docs/relabel_to_front
  * @see https://en.wikipedia.org/wiki/Push%E2%80%93relabel_maximum_flow_algorithm
  */
 #line 4 "test/aoj-grl-6-a-2.test.cpp"
