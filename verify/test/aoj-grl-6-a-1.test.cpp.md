@@ -25,13 +25,13 @@ layout: default
 <link rel="stylesheet" href="../../assets/css/copy-button.css" />
 
 
-# :heavy_check_mark: test/aoj-grl-6-a.test.cpp
+# :heavy_check_mark: test/aoj-grl-6-a-1.test.cpp
 
 <a href="../../index.html">Back to top page</a>
 
 * category: <a href="../../index.html#098f6bcd4621d373cade4e832627b4f6">test</a>
-* <a href="{{ site.github.repository_url }}/blob/master/test/aoj-grl-6-a.test.cpp">View this file on GitHub</a>
-    - Last commit date: 2020-05-03 15:19:31+09:00
+* <a href="{{ site.github.repository_url }}/blob/master/test/aoj-grl-6-a-1.test.cpp">View this file on GitHub</a>
+    - Last commit date: 2020-05-03 15:19:38+09:00
 
 
 * see: <a href="https://onlinejudge.u-aizu.ac.jp/courses/library/5/GRL/all/GRL_6_A">https://onlinejudge.u-aizu.ac.jp/courses/library/5/GRL/all/GRL_6_A</a>
@@ -39,8 +39,8 @@ layout: default
 
 ## Depends on
 
+* :heavy_check_mark: <a href="../../library/graph/flow/dinic.hpp.html">Dinic</a>
 * :heavy_check_mark: <a href="../../library/graph/flow/flow_edge.hpp.html">graph/flow/flow_edge.hpp</a>
-* :heavy_check_mark: <a href="../../library/graph/flow/ford_fulkerson.hpp.html">Ford−Fulkerson</a>
 
 
 ## Code
@@ -50,15 +50,15 @@ layout: default
 ```cpp
 #define PROBLEM "https://onlinejudge.u-aizu.ac.jp/courses/library/5/GRL/all/GRL_6_A"
 
-#include "../graph/flow/ford_fulkerson.hpp"
+#include "../graph/flow/dinic.hpp"
 
 #include <iostream>
 
-int main(){
+int main() {
     int n, m;
     std::cin >> n >> m;
 
-    auto ff=ford_fulkerson<int>(n, 0, n-1);
+    auto ff=dinic<int>(n, 0, n-1);
 
     while(m--){
         int u, v, c;
@@ -76,19 +76,15 @@ int main(){
 <a id="bundled"></a>
 {% raw %}
 ```cpp
-#line 1 "test/aoj-grl-6-a.test.cpp"
+#line 1 "test/aoj-grl-6-a-1.test.cpp"
 #define PROBLEM "https://onlinejudge.u-aizu.ac.jp/courses/library/5/GRL/all/GRL_6_A"
 
-#line 2 "graph/flow/ford_fulkerson.hpp"
-
-#include <vector>
-#include <cstddef>
-#include <algorithm>
+#line 2 "graph/flow/dinic.hpp"
 
 #line 2 "graph/flow/flow_edge.hpp"
 
 #include <iostream>
-#line 5 "graph/flow/flow_edge.hpp"
+#include <cstddef>
 
 template <class Flow> struct flow_edge {
     std::size_t to;
@@ -110,13 +106,33 @@ template <class Flow> struct flow_edge {
 template <class Flow> std::ostream& operator<<(std::ostream& os, flow_edge<Flow> e) {
     return os << "(" << e.to << "," << e.cap << ")";
 }
-#line 8 "graph/flow/ford_fulkerson.hpp"
+#line 4 "graph/flow/dinic.hpp"
 
-template <class Flow> class ford_fulkerson {
+#include <vector>
+#line 7 "graph/flow/dinic.hpp"
+#include <algorithm>
+
+template <class Flow> class dinic {
     std::size_t s, t;
     int time;
     std::vector<std::vector<flow_edge<Flow>>> g;
-    std::vector<int> ckd;
+    std::vector<int> ckd, dist;
+
+    // 距離を計算します。
+    void init_dist() {
+        dist.assign(size(), -1);
+        dist.at(s) = 0;
+        std::vector<std::size_t> que = {s};
+
+        for (std::size_t i=0; i<que.size(); i++) {
+            std::size_t x=que.at(i);
+
+            for (auto&& e : g.at(x)) if (dist.at(e.to)==-1 && e.cap!=zero()) {
+                dist.at(e.to) = dist.at(x) + 1;
+                que.push_back(e.to);
+            }
+        }
+    }
 
     // 増分路を探します。
     Flow find_aug(std::size_t x, Flow d /* フローが来ました */) {
@@ -136,14 +152,14 @@ template <class Flow> class ford_fulkerson {
 
 public:
     // special member functions
-    ford_fulkerson()=default;
-    ford_fulkerson(const ford_fulkerson&)=default;
-    ford_fulkerson(ford_fulkerson&&)=default;
-    ford_fulkerson&operator=(const ford_fulkerson&)=default;
-    ford_fulkerson&operator=(ford_fulkerson&&)=default;
-    ~ford_fulkerson()=default;
+    dinic()=default;
+    dinic(const dinic&)=default;
+    dinic(dinic&&)=default;
+    dinic&operator=(const dinic&)=default;
+    dinic&operator=(dinic&&)=default;
+    ~dinic()=default;
 
-    ford_fulkerson(std::size_t n, std::size_t s_, int t_)
+    dinic(std::size_t n, std::size_t s_, int t_)
         : s(s_), t(t_), time(0), g(n), ckd(n, -1) {}
 
     std::size_t size() const noexcept { return g.size(); }
@@ -175,21 +191,22 @@ public:
 };
 
 /*
- * @title Ford−Fulkerson
+ * 
+ * @title Dinic
  * @category graph
  * @category flow
- * @brief 計算量は $ O ( E f ) $ です。
- * @see https://en.wikipedia.org/wiki/Ford%E2%80%93Fulkerson_algorithm
+ * @brief 計算量は $ O ( V^2 E ) $ です。
+ * @see https://en.wikipedia.org/wiki/Dinic%27s_algorithm
  */
-#line 4 "test/aoj-grl-6-a.test.cpp"
+#line 4 "test/aoj-grl-6-a-1.test.cpp"
 
-#line 6 "test/aoj-grl-6-a.test.cpp"
+#line 6 "test/aoj-grl-6-a-1.test.cpp"
 
-int main(){
+int main() {
     int n, m;
     std::cin >> n >> m;
 
-    auto ff=ford_fulkerson<int>(n, 0, n-1);
+    auto ff=dinic<int>(n, 0, n-1);
 
     while(m--){
         int u, v, c;

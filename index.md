@@ -34,15 +34,24 @@ layout: default
 
 ## Library Files
 
+<div id="cff5497121104c2b8e0cb41ed2083a9b"></div>
+
+### flow
+
+* :heavy_check_mark: <a href="library/graph/flow/dinic.hpp.html">Dinic</a>
+* :heavy_check_mark: <a href="library/graph/flow/ford_fulkerson.hpp.html">Ford−Fulkerson</a>
+
+
 <div id="2af6c4bb6ad7cfa010303133dc15971f"></div>
 
 ### graph/flow
 
-* :heavy_check_mark: <a href="library/graph/flow/ford_fullkerson.hpp.html">graph/flow/ford_fullkerson.hpp</a>
+* :heavy_check_mark: <a href="library/graph/flow/flow_edge.hpp.html">graph/flow/flow_edge.hpp</a>
 
 
 ## Verify Files
 
-* :heavy_check_mark: <a href="verify/test/aoj-grl-6-a.test.cpp.html">Ford−Fulkerson</a>
+* :heavy_check_mark: <a href="verify/test/aoj-grl-6-a-1.test.cpp.html">test/aoj-grl-6-a-1.test.cpp</a>
+* :heavy_check_mark: <a href="verify/test/aoj-grl-6-a.test.cpp.html">test/aoj-grl-6-a.test.cpp</a>
 
 

@@ -25,20 +25,26 @@ layout: default
 <link rel="stylesheet" href="../../../assets/css/copy-button.css" />
 
 
-# :heavy_check_mark: graph/flow/ford_fullkerson.hpp
+# :heavy_check_mark: Ford−Fulkerson
 
 <a href="../../../index.html">Back to top page</a>
 
-* category: <a href="../../../index.html#2af6c4bb6ad7cfa010303133dc15971f">graph/flow</a>
-* <a href="{{ site.github.repository_url }}/blob/master/graph/flow/ford_fullkerson.hpp">View this file on GitHub</a>
-    - Last commit date: 2020-05-02 03:14:17+09:00
+* category: <a href="../../../index.html#cff5497121104c2b8e0cb41ed2083a9b">flow</a>
+* <a href="{{ site.github.repository_url }}/blob/master/graph/flow/ford_fulkerson.hpp">View this file on GitHub</a>
+    - Last commit date: 2020-05-03 15:19:31+09:00
 
 
+* see: <a href="https://en.wikipedia.org/wiki/Ford%E2%80%93Fulkerson_algorithm">https://en.wikipedia.org/wiki/Ford%E2%80%93Fulkerson_algorithm</a>
+
+
+## Depends on
+
+* :heavy_check_mark: <a href="flow_edge.hpp.html">graph/flow/flow_edge.hpp</a>
 
 
 ## Verified with
 
-* :heavy_check_mark: <a href="../../../verify/test/aoj-grl-6-a.test.cpp.html">Ford−Fulkerson</a>
+* :heavy_check_mark: <a href="../../../verify/test/aoj-grl-6-a.test.cpp.html">test/aoj-grl-6-a.test.cpp</a>
 
 
 ## Code
@@ -48,72 +54,44 @@ layout: default
 ```cpp
 #pragma once
 
-#include <bits/stdc++.h>
+#include <vector>
+#include <cstddef>
+#include <algorithm>
 
-template <class Flow> struct flow_edge {
-    std::size_t to;
-    std::size_t rev;
-    Flow cap;
+#include "flow_edge.hpp"
 
-    // special member functions
-    flow_edge()=default;
-    flow_edge(const flow_edge&)=default;
-    flow_edge(flow_edge&&)=default;
-    flow_edge&operator=(const flow_edge&)=default;
-    flow_edge&operator=(flow_edge&&)=default;
-    ~flow_edge()=default;
-
-    flow_edge(std::size_t to_, std::size_t rev_, Flow cap_)
-        : to(to_), rev(rev_), cap(cap_) {}
-};
-
-template <class Flow> std::ostream& operator<<(std::ostream& os, flow_edge<Flow> e) {
-    return os << "(" << e.to << "," << e.cap << ")";
-}
-
-template <class Flow> class ford_fullkerson {
+template <class Flow> class ford_fulkerson {
     std::size_t s, t;
     int time;
     std::vector<std::vector<flow_edge<Flow>>> g;
     std::vector<int> ckd;
 
-    Flow run_impl(std::size_t x, Flow d /* フローが来ました */) {
+    // 増分路を探します。
+    Flow find_aug(std::size_t x, Flow d /* フローが来ました */) {
         ckd.at(x) = time;
+        if (x == t) return d;
 
-        if (x == t) {
-            return d;
-        }
-
-        for (auto&& e : g.at(x)) {
-            if (ckd.at(e.to) == time || e.cap == zero()) {
-                continue;
-            }
-
-            Flow ret = run_impl(e.to, std::min(d, e.cap) /* 次に送ります */); // 帰ってきました
-
-            if (ret == zero()) {
-                continue;
-            }
+        for (auto&& e : g.at(x)) if (ckd.at(e.to)!=time && e.cap!=zero()) {
+            Flow ret = find_aug(e.to, std::min(d, e.cap) /* 次に送ります */); // 帰ってきました
+            if (ret==zero())continue;
 
             e.cap -= ret;
             g.at(e.to).at(e.rev).cap += ret;
-
             return ret; // さらに返します
         }
         return zero();
     }
 
 public:
-
     // special member functions
-    ford_fullkerson()=default;
-    ford_fullkerson(const ford_fullkerson&)=default;
-    ford_fullkerson(ford_fullkerson&&)=default;
-    ford_fullkerson&operator=(const ford_fullkerson&)=default;
-    ford_fullkerson&operator=(ford_fullkerson&&)=default;
-    ~ford_fullkerson()=default;
+    ford_fulkerson()=default;
+    ford_fulkerson(const ford_fulkerson&)=default;
+    ford_fulkerson(ford_fulkerson&&)=default;
+    ford_fulkerson&operator=(const ford_fulkerson&)=default;
+    ford_fulkerson&operator=(ford_fulkerson&&)=default;
+    ~ford_fulkerson()=default;
 
-    ford_fullkerson(std::size_t n, std::size_t s_, int t_)
+    ford_fulkerson(std::size_t n, std::size_t s_, int t_)
         : s(s_), t(t_), time(0), g(n), ckd(n, -1) {}
 
     std::size_t size() const noexcept { return g.size(); }
@@ -134,7 +112,7 @@ public:
         Flow flow = zero();
 
         for(Flow f; ; time++) {
-            f = run_impl(s, inf());
+            f = find_aug(s, inf());
             if (f == zero()) break;
             if (f == inf()) return inf(); // 容量無限の辺があるケースに対応です。
             flow += f;
@@ -144,6 +122,13 @@ public:
     }
 };
 
+/*
+ * @title Ford−Fulkerson
+ * @category graph
+ * @category flow
+ * @brief 計算量は $ O ( E f ) $ です。
+ * @see https://en.wikipedia.org/wiki/Ford%E2%80%93Fulkerson_algorithm
+ */
 
 ```
 {% endraw %}
@@ -151,9 +136,16 @@ public:
 <a id="bundled"></a>
 {% raw %}
 ```cpp
-#line 2 "graph/flow/ford_fullkerson.hpp"
+#line 2 "graph/flow/ford_fulkerson.hpp"
 
-#include <bits/stdc++.h>
+#include <vector>
+#include <cstddef>
+#include <algorithm>
+
+#line 2 "graph/flow/flow_edge.hpp"
+
+#include <iostream>
+#line 5 "graph/flow/flow_edge.hpp"
 
 template <class Flow> struct flow_edge {
     std::size_t to;
@@ -175,50 +167,40 @@ template <class Flow> struct flow_edge {
 template <class Flow> std::ostream& operator<<(std::ostream& os, flow_edge<Flow> e) {
     return os << "(" << e.to << "," << e.cap << ")";
 }
+#line 8 "graph/flow/ford_fulkerson.hpp"
 
-template <class Flow> class ford_fullkerson {
+template <class Flow> class ford_fulkerson {
     std::size_t s, t;
     int time;
     std::vector<std::vector<flow_edge<Flow>>> g;
     std::vector<int> ckd;
 
-    Flow run_impl(std::size_t x, Flow d /* フローが来ました */) {
+    // 増分路を探します。
+    Flow find_aug(std::size_t x, Flow d /* フローが来ました */) {
         ckd.at(x) = time;
+        if (x == t) return d;
 
-        if (x == t) {
-            return d;
-        }
-
-        for (auto&& e : g.at(x)) {
-            if (ckd.at(e.to) == time || e.cap == zero()) {
-                continue;
-            }
-
-            Flow ret = run_impl(e.to, std::min(d, e.cap) /* 次に送ります */); // 帰ってきました
-
-            if (ret == zero()) {
-                continue;
-            }
+        for (auto&& e : g.at(x)) if (ckd.at(e.to)!=time && e.cap!=zero()) {
+            Flow ret = find_aug(e.to, std::min(d, e.cap) /* 次に送ります */); // 帰ってきました
+            if (ret==zero())continue;
 
             e.cap -= ret;
             g.at(e.to).at(e.rev).cap += ret;
-
             return ret; // さらに返します
         }
         return zero();
     }
 
 public:
-
     // special member functions
-    ford_fullkerson()=default;
-    ford_fullkerson(const ford_fullkerson&)=default;
-    ford_fullkerson(ford_fullkerson&&)=default;
-    ford_fullkerson&operator=(const ford_fullkerson&)=default;
-    ford_fullkerson&operator=(ford_fullkerson&&)=default;
-    ~ford_fullkerson()=default;
+    ford_fulkerson()=default;
+    ford_fulkerson(const ford_fulkerson&)=default;
+    ford_fulkerson(ford_fulkerson&&)=default;
+    ford_fulkerson&operator=(const ford_fulkerson&)=default;
+    ford_fulkerson&operator=(ford_fulkerson&&)=default;
+    ~ford_fulkerson()=default;
 
-    ford_fullkerson(std::size_t n, std::size_t s_, int t_)
+    ford_fulkerson(std::size_t n, std::size_t s_, int t_)
         : s(s_), t(t_), time(0), g(n), ckd(n, -1) {}
 
     std::size_t size() const noexcept { return g.size(); }
@@ -239,7 +221,7 @@ public:
         Flow flow = zero();
 
         for(Flow f; ; time++) {
-            f = run_impl(s, inf());
+            f = find_aug(s, inf());
             if (f == zero()) break;
             if (f == inf()) return inf(); // 容量無限の辺があるケースに対応です。
             flow += f;
@@ -249,6 +231,13 @@ public:
     }
 };
 
+/*
+ * @title Ford−Fulkerson
+ * @category graph
+ * @category flow
+ * @brief 計算量は $ O ( E f ) $ です。
+ * @see https://en.wikipedia.org/wiki/Ford%E2%80%93Fulkerson_algorithm
+ */
 
 ```
 {% endraw %}
