@@ -226,7 +226,7 @@ template <class Flow> struct relabel_to_front {
  * @title Push-relabel by Relabel-to-front selection rule
  * @category graph
  * @category flow
- * @docs docs/relabel_to_front
+ * @docs docs/relabel_to_front.md
  * @see https://en.wikipedia.org/wiki/Push%E2%80%93relabel_maximum_flow_algorithm
  */
 #line 4 "test/aoj-grl-6-a-2.test.cpp"
