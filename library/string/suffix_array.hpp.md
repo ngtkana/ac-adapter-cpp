@@ -31,14 +31,14 @@ layout: default
 
 * category: <a href="../../index.html#b45cffe084dd3d20d928bee85e7b0f21">string</a>
 * <a href="{{ site.github.repository_url }}/blob/master/string/suffix_array.hpp">View this file on GitHub</a>
-    - Last commit date: 2020-05-05 16:24:36+09:00
+    - Last commit date: 2020-05-05 17:45:19+09:00
 
 
 
 
 ## Verified with
 
-* :heavy_check_mark: <a href="../../verify/test/hello-world/suffix-array.test.cpp.html">test/hello-world/suffix-array.test.cpp</a>
+* :heavy_check_mark: <a href="../../verify/test/yosupo-suffix-array.test.cpp.html">test/yosupo-suffix-array.test.cpp</a>
 
 
 ## Code
@@ -56,6 +56,8 @@ layout: default
 template <class Container, class=typename Container::value_type>
 std::vector<std::size_t> suffix_array (Container const& s)
 {
+    if (s.empty())  return {};
+
     std::vector<std::size_t> c(s.size()), sa(s.size()), swp(s.size()), pos(s.size());
 
     // 1 文字目まで見てソートです。
@@ -66,7 +68,7 @@ std::vector<std::size_t> suffix_array (Container const& s)
     // 1 文字目まで見た同値類です。
     // 1 文字しかないものは特別で、別同値類です。←ここが匠ポイントです。
     for (std::size_t i=1; i<s.size(); i++) {
-        c.at(sa.at(i)) = 1<i && s.at(sa.at(i-1))==s.at(sa.at(i))
+        c.at(sa.at(i)) = sa.at(i-1)+1!=s.size() && s.at(sa.at(i-1))==s.at(sa.at(i))
             ? c.at(sa.at(i-1))
             : i
             ;
@@ -79,13 +81,9 @@ std::vector<std::size_t> suffix_array (Container const& s)
 
         // ソートです。
         // 長さの短いものとぴったりのものは、別です。
-        for (std::size_t i=s.size()-len; i<s.size(); i++) {
-            swp.at(c.at(i)) = i;
-        }
+        swp = sa;
         for (std::size_t i : sa) if (len <= i) {
-            if (len <= i) {
-                swp.at(pos.at(c.at(i-len))++) = i-len;
-            }
+            swp.at(pos.at(c.at(i-len))++) = i-len;
         }
         swp.swap(sa);
 
@@ -93,10 +91,12 @@ std::vector<std::size_t> suffix_array (Container const& s)
         // ピッタリのものは特別で、別同値類です。←ここが匠ポイントです。
         swp.at(sa.at(0)) = 0;
         for (std::size_t i=1; i<s.size(); i++) {
-            swp.at(sa.at(i)) = sa.at(i-1)+len<s.size()
-                && c.at(sa.at(i-1))==c.at(sa.at(i))
-                && c.at(sa.at(i-1)+len)==c.at(sa.at(i)+len)
-                ? c.at(sa.at(i-1))
+            std::size_t x=sa.at(i-1), y=sa.at(i);
+
+            swp.at(y) = x+len<s.size()
+                && c.at(x)==c.at(y)
+                && c.at(x+len)==c.at(y+len)
+                ? swp.at(x)
                 : i
                 ;
         }
@@ -122,6 +122,8 @@ std::vector<std::size_t> suffix_array (Container const& s)
 template <class Container, class=typename Container::value_type>
 std::vector<std::size_t> suffix_array (Container const& s)
 {
+    if (s.empty())  return {};
+
     std::vector<std::size_t> c(s.size()), sa(s.size()), swp(s.size()), pos(s.size());
 
     // 1 文字目まで見てソートです。
@@ -132,7 +134,7 @@ std::vector<std::size_t> suffix_array (Container const& s)
     // 1 文字目まで見た同値類です。
     // 1 文字しかないものは特別で、別同値類です。←ここが匠ポイントです。
     for (std::size_t i=1; i<s.size(); i++) {
-        c.at(sa.at(i)) = 1<i && s.at(sa.at(i-1))==s.at(sa.at(i))
+        c.at(sa.at(i)) = sa.at(i-1)+1!=s.size() && s.at(sa.at(i-1))==s.at(sa.at(i))
             ? c.at(sa.at(i-1))
             : i
             ;
@@ -145,13 +147,9 @@ std::vector<std::size_t> suffix_array (Container const& s)
 
         // ソートです。
         // 長さの短いものとぴったりのものは、別です。
-        for (std::size_t i=s.size()-len; i<s.size(); i++) {
-            swp.at(c.at(i)) = i;
-        }
+        swp = sa;
         for (std::size_t i : sa) if (len <= i) {
-            if (len <= i) {
-                swp.at(pos.at(c.at(i-len))++) = i-len;
-            }
+            swp.at(pos.at(c.at(i-len))++) = i-len;
         }
         swp.swap(sa);
 
@@ -159,10 +157,12 @@ std::vector<std::size_t> suffix_array (Container const& s)
         // ピッタリのものは特別で、別同値類です。←ここが匠ポイントです。
         swp.at(sa.at(0)) = 0;
         for (std::size_t i=1; i<s.size(); i++) {
-            swp.at(sa.at(i)) = sa.at(i-1)+len<s.size()
-                && c.at(sa.at(i-1))==c.at(sa.at(i))
-                && c.at(sa.at(i-1)+len)==c.at(sa.at(i)+len)
-                ? c.at(sa.at(i-1))
+            std::size_t x=sa.at(i-1), y=sa.at(i);
+
+            swp.at(y) = x+len<s.size()
+                && c.at(x)==c.at(y)
+                && c.at(x+len)==c.at(y+len)
+                ? swp.at(x)
                 : i
                 ;
         }

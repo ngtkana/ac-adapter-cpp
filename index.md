@@ -62,6 +62,6 @@ layout: default
 * :heavy_check_mark: <a href="verify/test/aoj-grl-6-a-1.test.cpp.html">test/aoj-grl-6-a-1.test.cpp</a>
 * :heavy_check_mark: <a href="verify/test/aoj-grl-6-a-2.test.cpp.html">test/aoj-grl-6-a-2.test.cpp</a>
 * :heavy_check_mark: <a href="verify/test/aoj-grl-6-a.test.cpp.html">test/aoj-grl-6-a.test.cpp</a>
-* :heavy_check_mark: <a href="verify/test/hello-world/suffix-array.test.cpp.html">test/hello-world/suffix-array.test.cpp</a>
+* :heavy_check_mark: <a href="verify/test/yosupo-suffix-array.test.cpp.html">test/yosupo-suffix-array.test.cpp</a>
 
 
