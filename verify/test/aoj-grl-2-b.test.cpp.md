@@ -160,6 +160,7 @@ struct splay_node {
         , right(nullptr)
         , size(1u)
         , value(x)
+        , acc(x)
     {}
 
     kstate state() const {
@@ -179,11 +180,11 @@ struct splay_node {
         acc = value;
         if (left) {
             size += left->size;
-            acc += left->acc;
+            acc =  Monoid::op(acc, left->acc);
         }
         if (right) {
             size += right->size;
-            acc += right->acc;
+            acc =  Monoid::op(acc, right->acc);
         }
     }
 
@@ -305,9 +306,13 @@ struct splay_node {
     std::pair<value_type, this_type*>
     fold(std::size_t l, std::size_t r)
     {
+        assert(0 <= l && l <= r && r <= size);
+        if (l==r) return std::make_pair(Monoid::id, this);
+
         this_type *lt, *ct, *rt;
         std::tie(lt, ct, rt) = this_type::split_into_three(this, l, r);
 
+        assert(ct);
         value_type folded = ct->acc;
 
         this_type* root = this_type::merge_from_three(lt, ct, rt);
