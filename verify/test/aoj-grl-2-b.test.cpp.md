@@ -25,7 +25,7 @@ layout: default
 <link rel="stylesheet" href="../../assets/css/copy-button.css" />
 
 
-# :x: test/aoj-grl-2-b.test.cpp
+# :heavy_check_mark: test/aoj-grl-2-b.test.cpp
 
 <a href="../../index.html">Back to top page</a>
 
@@ -39,7 +39,7 @@ layout: default
 
 ## Depends on
 
-* :x: <a href="../../library/bbst/splay_node.hpp.html">bbst/splay_node.hpp</a>
+* :heavy_check_mark: <a href="../../library/bbst/splay_node.hpp.html">bbst/splay_node.hpp</a>
 
 
 ## Code
@@ -88,9 +88,10 @@ int main() {
             std::size_t i;
             int x;
             std::cin >> i >> x;
+            i--;
 
             root = root->get(i);
-            root->set(x);
+            root->set(root->value + x);
         }
 
         if (c==1) {
@@ -98,12 +99,10 @@ int main() {
             std::cin >> l >> r;
             l--;
 
-            splay_node_t *lt, *ct, *rt;
-            std::tie(lt, ct, rt) = splay_node_t::split_into_three(root, l, r);
+            int ans;
+            std::tie(ans, root) = root->fold(l, r);
 
-            std::cout << root->acc << '\n';
-
-            root = splay_node_t::merge_from_three(lt, ct, rt);
+            std::cout << ans << '\n';
         }
     }
 }
@@ -123,6 +122,7 @@ int main() {
 #include <cassert>
 #include <utility>
 #include <tuple>
+#include <vector>
 
 template <class Monoid>
 struct splay_node {
@@ -250,13 +250,13 @@ struct splay_node {
         }
     }
 
-    template <class F> static std::size_t
-    partition_point(this_type* root, F const& f)
+    template <class F> std::size_t
+    partition_point(F const& f)
     {
-        if (f(root)) {
-            return root->left ? lower_bound(root->left, f) : 0u;
+        if (f(this)) {
+            return left ? partition_point(left, f) : 0u;
         } else {
-            return root->right ? root->size - root->right->size + lower_bound(root->right, f) : root->size;
+            return right ? size - right->size + partition_point(right, f) : size;
         }
     }
 
@@ -301,11 +301,45 @@ struct splay_node {
         std::tie(ltree, ctree) = split(lctree, l);
         return std::make_tuple( ltree, ctree, rtree );
     }
+
+    std::pair<value_type, this_type*>
+    fold(std::size_t l, std::size_t r)
+    {
+        this_type *lt, *ct, *rt;
+        std::tie(lt, ct, rt) = this_type::split_into_three(this, l, r);
+
+        value_type folded = ct->acc;
+
+        this_type* root = this_type::merge_from_three(lt, ct, rt);
+
+        return std::make_pair(folded, root);
+    }
+
+    std::vector<value_type>
+    to_vec() const
+    {
+        return to_vec_with([](this_type x){ return x.value; });
+    }
+
+    template <class F, class T = std::result_of_t<F(this_type)>> std::vector<T>
+    to_vec_with(F const& f) const
+    {
+        std::vector<T> ans;
+        if (left) {
+            auto lvec = left->to_vec();
+            ans.insert(ans.end(), lvec.begin(), lvec.end());
+        }
+        ans.push_back(f(*this));
+        if (right) {
+            auto rvec = right->to_vec();
+            ans.insert(ans.end(), rvec.begin(), rvec.end());
+        }
+        return ans;
+    }
 };
 #line 4 "test/aoj-grl-2-b.test.cpp"
 
 #include <iostream>
-#include <vector>
 #line 8 "test/aoj-grl-2-b.test.cpp"
 
 // add-monoid{{{
@@ -341,9 +375,10 @@ int main() {
             std::size_t i;
             int x;
             std::cin >> i >> x;
+            i--;
 
             root = root->get(i);
-            root->set(x);
+            root->set(root->value + x);
         }
 
         if (c==1) {
@@ -351,12 +386,10 @@ int main() {
             std::cin >> l >> r;
             l--;
 
-            splay_node_t *lt, *ct, *rt;
-            std::tie(lt, ct, rt) = splay_node_t::split_into_three(root, l, r);
+            int ans;
+            std::tie(ans, root) = root->fold(l, r);
 
-            std::cout << root->acc << '\n';
-
-            root = splay_node_t::merge_from_three(lt, ct, rt);
+            std::cout << ans << '\n';
         }
     }
 }

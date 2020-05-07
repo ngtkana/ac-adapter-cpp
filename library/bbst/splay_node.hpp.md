@@ -25,7 +25,7 @@ layout: default
 <link rel="stylesheet" href="../../assets/css/copy-button.css" />
 
 
-# :x: bbst/splay_node.hpp
+# :heavy_check_mark: bbst/splay_node.hpp
 
 <a href="../../index.html">Back to top page</a>
 
@@ -38,7 +38,7 @@ layout: default
 
 ## Verified with
 
-* :x: <a href="../../verify/test/aoj-grl-2-b.test.cpp.html">test/aoj-grl-2-b.test.cpp</a>
+* :heavy_check_mark: <a href="../../verify/test/aoj-grl-2-b.test.cpp.html">test/aoj-grl-2-b.test.cpp</a>
 
 
 ## Code
@@ -52,6 +52,7 @@ layout: default
 #include <cassert>
 #include <utility>
 #include <tuple>
+#include <vector>
 
 template <class Monoid>
 struct splay_node {
@@ -179,13 +180,13 @@ struct splay_node {
         }
     }
 
-    template <class F> static std::size_t
-    partition_point(this_type* root, F const& f)
+    template <class F> std::size_t
+    partition_point(F const& f)
     {
-        if (f(root)) {
-            return root->left ? lower_bound(root->left, f) : 0u;
+        if (f(this)) {
+            return left ? partition_point(left, f) : 0u;
         } else {
-            return root->right ? root->size - root->right->size + lower_bound(root->right, f) : root->size;
+            return right ? size - right->size + partition_point(right, f) : size;
         }
     }
 
@@ -229,6 +230,41 @@ struct splay_node {
         std::tie(lctree, rtree) = split(root, r);
         std::tie(ltree, ctree) = split(lctree, l);
         return std::make_tuple( ltree, ctree, rtree );
+    }
+
+    std::pair<value_type, this_type*>
+    fold(std::size_t l, std::size_t r)
+    {
+        this_type *lt, *ct, *rt;
+        std::tie(lt, ct, rt) = this_type::split_into_three(this, l, r);
+
+        value_type folded = ct->acc;
+
+        this_type* root = this_type::merge_from_three(lt, ct, rt);
+
+        return std::make_pair(folded, root);
+    }
+
+    std::vector<value_type>
+    to_vec() const
+    {
+        return to_vec_with([](this_type x){ return x.value; });
+    }
+
+    template <class F, class T = std::result_of_t<F(this_type)>> std::vector<T>
+    to_vec_with(F const& f) const
+    {
+        std::vector<T> ans;
+        if (left) {
+            auto lvec = left->to_vec();
+            ans.insert(ans.end(), lvec.begin(), lvec.end());
+        }
+        ans.push_back(f(*this));
+        if (right) {
+            auto rvec = right->to_vec();
+            ans.insert(ans.end(), rvec.begin(), rvec.end());
+        }
+        return ans;
     }
 };
 
@@ -244,6 +280,7 @@ struct splay_node {
 #include <cassert>
 #include <utility>
 #include <tuple>
+#include <vector>
 
 template <class Monoid>
 struct splay_node {
@@ -371,13 +408,13 @@ struct splay_node {
         }
     }
 
-    template <class F> static std::size_t
-    partition_point(this_type* root, F const& f)
+    template <class F> std::size_t
+    partition_point(F const& f)
     {
-        if (f(root)) {
-            return root->left ? lower_bound(root->left, f) : 0u;
+        if (f(this)) {
+            return left ? partition_point(left, f) : 0u;
         } else {
-            return root->right ? root->size - root->right->size + lower_bound(root->right, f) : root->size;
+            return right ? size - right->size + partition_point(right, f) : size;
         }
     }
 
@@ -421,6 +458,41 @@ struct splay_node {
         std::tie(lctree, rtree) = split(root, r);
         std::tie(ltree, ctree) = split(lctree, l);
         return std::make_tuple( ltree, ctree, rtree );
+    }
+
+    std::pair<value_type, this_type*>
+    fold(std::size_t l, std::size_t r)
+    {
+        this_type *lt, *ct, *rt;
+        std::tie(lt, ct, rt) = this_type::split_into_three(this, l, r);
+
+        value_type folded = ct->acc;
+
+        this_type* root = this_type::merge_from_three(lt, ct, rt);
+
+        return std::make_pair(folded, root);
+    }
+
+    std::vector<value_type>
+    to_vec() const
+    {
+        return to_vec_with([](this_type x){ return x.value; });
+    }
+
+    template <class F, class T = std::result_of_t<F(this_type)>> std::vector<T>
+    to_vec_with(F const& f) const
+    {
+        std::vector<T> ans;
+        if (left) {
+            auto lvec = left->to_vec();
+            ans.insert(ans.end(), lvec.begin(), lvec.end());
+        }
+        ans.push_back(f(*this));
+        if (right) {
+            auto rvec = right->to_vec();
+            ans.insert(ans.end(), rvec.begin(), rvec.end());
+        }
+        return ans;
     }
 };
 

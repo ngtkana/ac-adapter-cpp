@@ -38,7 +38,7 @@ layout: default
 
 ### bbst
 
-* :x: <a href="library/bbst/splay_node.hpp.html">bbst/splay_node.hpp</a>
+* :heavy_check_mark: <a href="library/bbst/splay_node.hpp.html">bbst/splay_node.hpp</a>
 
 
 <div id="cff5497121104c2b8e0cb41ed2083a9b"></div>
@@ -66,7 +66,7 @@ layout: default
 
 ## Verify Files
 
-* :x: <a href="verify/test/aoj-grl-2-b.test.cpp.html">test/aoj-grl-2-b.test.cpp</a>
+* :heavy_check_mark: <a href="verify/test/aoj-grl-2-b.test.cpp.html">test/aoj-grl-2-b.test.cpp</a>
 * :heavy_check_mark: <a href="verify/test/aoj-grl-6-a-1.test.cpp.html">test/aoj-grl-6-a-1.test.cpp</a>
 * :heavy_check_mark: <a href="verify/test/aoj-grl-6-a-2.test.cpp.html">test/aoj-grl-6-a-2.test.cpp</a>
 * :heavy_check_mark: <a href="verify/test/aoj-grl-6-a.test.cpp.html">test/aoj-grl-6-a.test.cpp</a>
