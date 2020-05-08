@@ -34,13 +34,6 @@ layout: default
 
 ## Library Files
 
-<div id="d342894e126a2cdd0812cd3a6c903bbd"></div>
-
-### bbst
-
-* :heavy_check_mark: <a href="library/bbst/splay_node.hpp.html">bbst/splay_node.hpp</a>
-
-
 <div id="cff5497121104c2b8e0cb41ed2083a9b"></div>
 
 ### flow
@@ -66,8 +59,8 @@ layout: default
 
 ## Verify Files
 
-* :heavy_check_mark: <a href="verify/test/aoj-grl-2-a.test.cpp.html">test/aoj-grl-2-a.test.cpp</a>
-* :heavy_check_mark: <a href="verify/test/aoj-grl-2-b.test.cpp.html">test/aoj-grl-2-b.test.cpp</a>
+* :x: <a href="verify/test/aoj-grl-2-a.test.cpp.html">test/aoj-grl-2-a.test.cpp</a>
+* :x: <a href="verify/test/aoj-grl-2-b.test.cpp.html">test/aoj-grl-2-b.test.cpp</a>
 * :heavy_check_mark: <a href="verify/test/aoj-grl-6-a-1.test.cpp.html">test/aoj-grl-6-a-1.test.cpp</a>
 * :heavy_check_mark: <a href="verify/test/aoj-grl-6-a-2.test.cpp.html">test/aoj-grl-6-a-2.test.cpp</a>
 * :heavy_check_mark: <a href="verify/test/aoj-grl-6-a.test.cpp.html">test/aoj-grl-6-a.test.cpp</a>
