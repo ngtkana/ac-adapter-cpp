@@ -5,7 +5,9 @@
 #include <utility>
 #include <tuple>
 #include <vector>
+#include <memory>
 
+// struct splay_node<Monoid>{{{
 template <class Monoid>
 struct splay_node {
     using this_type = splay_node<Monoid>;
@@ -134,12 +136,16 @@ struct splay_node {
     }
 
     template <class F> std::size_t
-    partition_point(F const& f)
+    partition_point(F&& f)
     {
-        if (f(this)) {
-            return left ? partition_point(left, f) : 0u;
+        if (f(*this)) {
+            return right
+                ? size - right->size + right->partition_point(std::forward<F&&>(f))
+                : size;
         } else {
-            return right ? size - right->size + partition_point(right, f) : size;
+            return left
+                ? left->partition_point(std::forward<F&&>(f))
+                : 0u;
         }
     }
 
@@ -189,7 +195,7 @@ struct splay_node {
     fold(std::size_t l, std::size_t r)
     {
         assert(0 <= l && l <= r && r <= size);
-        if (l==r) return std::make_pair(Monoid::id, this);
+        if (l==r) return std::make_pair(Monoid::id(), this);
 
         this_type *lt, *ct, *rt;
         std::tie(lt, ct, rt) = this_type::split_into_three(this, l, r);
@@ -224,3 +230,116 @@ struct splay_node {
         return ans;
     }
 };
+/*}}}*/
+// class splay_tree<Monoid>{{{
+template <class Monoid>
+class splay_tree {
+    using node_type = splay_node<Monoid>;
+    using value_type = typename Monoid::value_type;
+
+    std::vector<std::unique_ptr<node_type>> node;
+    std::size_t root_idx;
+
+public:
+    splay_tree()=default;
+    splay_tree(splay_tree const&)=delete;
+    splay_tree(splay_tree&&)=default;
+    splay_tree& operator=(splay_tree const&)=delete;
+    splay_tree& operator=(splay_tree&&)=default;
+    ~splay_tree()=default;
+
+    splay_tree(std::size_t n)
+        : node(n)
+    {
+        for (auto&& p : node) {
+            p = std::make_unique<node_type>(Monoid::id());
+        }
+        for (std::size_t i=0; i<n-1; i++) {
+            node_type::merge(node.at(i).get(), node.at(i+1).get());
+        }
+        root_idx = n-1;
+    }
+
+    splay_tree(std::vector<value_type> const& a)
+        : splay_tree(a.size())
+    {
+        for (std::size_t i=0; i<a.size(); i++) {
+            node.at(i) = std::make_unique<node_type>(a.at(i));
+        }
+        for (std::size_t i=0; i<a.size()-1; i++) {
+            node_type::merge(node.at(i).get(), node.at(i+1).get());
+        }
+        root_idx = a.size()-1;
+    }
+
+    bool empty() const { return node.empty(); }
+
+    value_type get(std::size_t i)
+    {
+        assert(0 <= i && i < node.size());
+        node_type* root = node.at(root_idx)->get(i);
+        root_idx = root->lsize();
+        return root->value;
+    }
+
+    void set(std::size_t i, value_type x)
+    {
+        assert(0 <= i && i < node.size());
+        node_type* root = node.at(root_idx)->get(i);
+        root->set(x);
+        root_idx =  root->lsize();
+    }
+
+    value_type fold_all() const
+    {
+        return empty() ? Monoid::id() : node.at(root_idx)->acc;
+    }
+
+    value_type fold(std::size_t l, std::size_t r)
+    {
+        assert(0u <= l && l <= r && r <= node.size());
+        if (empty()) {
+            return Monoid::id();
+        } else {
+            value_type ret;
+            node_type *root;
+            std::tie(ret, root) = node.at(root_idx)->fold(l, r);
+            root_idx = root->lsize();
+            return ret;
+        }
+    }
+
+    template <class F> std::size_t
+    partition_point(F&& f) const
+    {
+        return empty()
+            ? 0u
+            :node.at(root_idx)->partition_point(std::forward<F&&>(f));
+    }
+
+    std::size_t lower_bound(value_type x) const
+    {
+        return partition_point([x](node_type n){ return n.value < x; });
+    }
+
+    std::size_t upper_bound(value_type x) const
+    {
+        return partition_point([x](node_type n){ return n.value <= x; });
+    }
+
+    template <class F, class T = std::result_of_t<F(node_type)>> std::vector<T>
+    to_vec_with(F&& f) const
+    {
+        return empty()
+            ? std::vector<T>{}
+            : node.at(root_idx)->to_vec_with(std::forward<F&&>(f));
+    }
+
+    std::vector<value_type> to_vec() const
+    {
+        return empty()
+            ? std::vector<value_type>{}
+            : node.at(root_idx)->to_vec();
+    }
+};
+/*}}}*/

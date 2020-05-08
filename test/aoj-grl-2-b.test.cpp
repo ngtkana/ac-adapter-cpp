@@ -1,6 +1,6 @@
 #define PROBLEM "https://onlinejudge.u-aizu.ac.jp/courses/library/3/DSL/all/DSL_2_B"
 
-#include "../bbst/splay_node.hpp"
+#include "../bbst/splay_tree.hpp"
 
 #include <iostream>
 #include <vector>
@@ -10,26 +10,15 @@
 template <class Value> struct add_monoid_t {
     using value_type = Value;
     static value_type op(value_type l, value_type r) { return l + r; }
-    static const value_type id;
+    static const value_type id() { return 0; };
 };
-template <class Value> const typename add_monoid_t<Value>::value_type
-add_monoid_t<Value>::id = 0;
 /*}}}*/
 
 int main() {
     std::size_t n, q;
     std::cin >> n >> q;
 
-    using splay_node_t = splay_node<add_monoid_t<int>>;
-
-    std::vector<splay_node_t> a(n);
-    for (std::size_t i=0; i<n; i++) {
-        a.at(i).value = 0;
-        if (i<n-1) {
-            splay_node_t::merge(&a.at(i), &a.at(i+1));
-        }
-    }
-    splay_node_t *root = &a.back();
+    splay_tree<add_monoid_t<int>> sp(n);
 
     for (std::size_t i=0; i<q; i++) {
         int c;
@@ -41,8 +30,7 @@ int main() {
             std::cin >> i >> x;
             i--;
 
-            root = root->get(i);
-            root->set(root->value + x);
+            sp.set(i, sp.get(i) + x);
         }
 
         if (c==1) {
@@ -50,10 +38,7 @@ int main() {
             std::cin >> l >> r;
             l--;
 
-            int ans;
-            std::tie(ans, root) = root->fold(l, r);
-
-            std::cout << ans << '\n';
+            std::cout << sp.fold(l, r) << '\n';
         }
     }
 }
