@@ -61,8 +61,8 @@ layout: default
 
 ### integral
 
-* :heavy_check_mark: <a href="library/integral/mint.hpp.html">integral/mint.hpp</a>
-* :heavy_check_mark: <a href="library/integral/nt_trsf.hpp.html">integral/nt_trsf.hpp</a>
+* :heavy_check_mark: <a href="library/integral/mint.hpp.html">mint</a>
+* :heavy_check_mark: <a href="library/integral/nt_trsf.hpp.html">NTT</a>
 
 
 <div id="b45cffe084dd3d20d928bee85e7b0f21"></div>

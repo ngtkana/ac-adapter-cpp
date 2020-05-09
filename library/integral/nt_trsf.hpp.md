@@ -25,20 +25,20 @@ layout: default
 <link rel="stylesheet" href="../../assets/css/copy-button.css" />
 
 
-# :heavy_check_mark: integral/nt_trsf.hpp
+# :heavy_check_mark: NTT
 
 <a href="../../index.html">Back to top page</a>
 
 * category: <a href="../../index.html#25aa2761448ea05599418ee93dd1d5c5">integral</a>
 * <a href="{{ site.github.repository_url }}/blob/master/integral/nt_trsf.hpp">View this file on GitHub</a>
-    - Last commit date: 2020-05-09 17:31:13+09:00
+    - Last commit date: 2020-05-09 17:47:43+09:00
 
 
 
 
 ## Depends on
 
-* :heavy_check_mark: <a href="mint.hpp.html">integral/mint.hpp</a>
+* :heavy_check_mark: <a href="mint.hpp.html">mint</a>
 
 
 ## Verified with
@@ -151,6 +151,11 @@ struct nt_trsf {
         return a;
     }
 };
+
+/*
+ * @title NTT
+ * @docs docs/integral/ntt.md
+ */
 
 ```
 {% endraw %}
@@ -304,6 +309,10 @@ template <class T, class U> bool operator!=(U x, modint<T> y) { return modint<T>
 using mod_type = int;
 constexpr mod_type mod = 998244353;
 using mint = modint< std::integral_constant<mod_type, mod> >;
+
+/*
+ * @title mint
+ */
 #line 4 "integral/nt_trsf.hpp"
 
 #include <array>
@@ -402,6 +411,11 @@ struct nt_trsf {
         return a;
     }
 };
+
+/*
+ * @title NTT
+ * @docs docs/integral/ntt.md
+ */
 
 ```
 {% endraw %}

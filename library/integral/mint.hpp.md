@@ -25,20 +25,20 @@ layout: default
 <link rel="stylesheet" href="../../assets/css/copy-button.css" />
 
 
-# :heavy_check_mark: integral/mint.hpp
+# :heavy_check_mark: mint
 
 <a href="../../index.html">Back to top page</a>
 
 * category: <a href="../../index.html#25aa2761448ea05599418ee93dd1d5c5">integral</a>
 * <a href="{{ site.github.repository_url }}/blob/master/integral/mint.hpp">View this file on GitHub</a>
-    - Last commit date: 2020-05-09 17:31:13+09:00
+    - Last commit date: 2020-05-09 17:47:43+09:00
 
 
 
 
 ## Required by
 
-* :heavy_check_mark: <a href="nt_trsf.hpp.html">integral/nt_trsf.hpp</a>
+* :heavy_check_mark: <a href="nt_trsf.hpp.html">NTT</a>
 
 
 ## Verified with
@@ -196,6 +196,10 @@ using mod_type = int;
 constexpr mod_type mod = 998244353;
 using mint = modint< std::integral_constant<mod_type, mod> >;
 
+/*
+ * @title mint
+ */
+
 ```
 {% endraw %}
 
@@ -346,6 +350,10 @@ template <class T, class U> bool operator!=(U x, modint<T> y) { return modint<T>
 using mod_type = int;
 constexpr mod_type mod = 998244353;
 using mint = modint< std::integral_constant<mod_type, mod> >;
+
+/*
+ * @title mint
+ */
 
 ```
 {% endraw %}

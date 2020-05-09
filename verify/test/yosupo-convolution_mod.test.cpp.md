@@ -31,7 +31,7 @@ layout: default
 
 * category: <a href="../../index.html#098f6bcd4621d373cade4e832627b4f6">test</a>
 * <a href="{{ site.github.repository_url }}/blob/master/test/yosupo-convolution_mod.test.cpp">View this file on GitHub</a>
-    - Last commit date: 2020-05-09 17:31:13+09:00
+    - Last commit date: 2020-05-09 17:47:43+09:00
 
 
 * see: <a href="https://judge.yosupo.jp/problem/convolution_mod">https://judge.yosupo.jp/problem/convolution_mod</a>
@@ -39,8 +39,8 @@ layout: default
 
 ## Depends on
 
-* :heavy_check_mark: <a href="../../library/integral/mint.hpp.html">integral/mint.hpp</a>
-* :heavy_check_mark: <a href="../../library/integral/nt_trsf.hpp.html">integral/nt_trsf.hpp</a>
+* :heavy_check_mark: <a href="../../library/integral/mint.hpp.html">mint</a>
+* :heavy_check_mark: <a href="../../library/integral/nt_trsf.hpp.html">NTT</a>
 
 
 ## Code
@@ -229,6 +229,10 @@ template <class T, class U> bool operator!=(U x, modint<T> y) { return modint<T>
 using mod_type = int;
 constexpr mod_type mod = 998244353;
 using mint = modint< std::integral_constant<mod_type, mod> >;
+
+/*
+ * @title mint
+ */
 #line 4 "integral/nt_trsf.hpp"
 
 #include <array>
@@ -327,6 +331,11 @@ struct nt_trsf {
         return a;
     }
 };
+
+/*
+ * @title NTT
+ * @docs docs/integral/ntt.md
+ */
 #line 4 "test/yosupo-convolution_mod.test.cpp"
 
 #line 7 "test/yosupo-convolution_mod.test.cpp"
