@@ -25,15 +25,34 @@ layout: default
 <link rel="stylesheet" href="../../assets/css/copy-button.css" />
 
 
-# :warning: string/z_algorithm.hpp
+# :warning: Z algorithm <small>(string/z_algorithm.hpp)</small>
 
 <a href="../../index.html">Back to top page</a>
 
 * category: <a href="../../index.html#b45cffe084dd3d20d928bee85e7b0f21">string</a>
 * <a href="{{ site.github.repository_url }}/blob/master/string/z_algorithm.hpp">View this file on GitHub</a>
-    - Last commit date: 2020-05-09 22:50:08+09:00
+    - Last commit date: 2020-05-09 23:03:06+09:00
 
 
+* see: <a href="https://snuke.hatenablog.com/entry/2014/12/03/214243">https://snuke.hatenablog.com/entry/2014/12/03/214243</a>
+* see: <a href="https://qiita.com/Pro_ktmr/items/16904c9570aa0953bf05">https://qiita.com/Pro_ktmr/items/16904c9570aa0953bf05</a>
+* see: <a href="https://ei1333.github.io/luzhiled/snippets/string/z-algorithm.html">https://ei1333.github.io/luzhiled/snippets/string/z-algorithm.html</a>
+
+
+## 仕様
+
+文字列 s 対して、Z 配列を求めます。定義は
+
+$
+    \begin{align}
+     z _ i = \max \left\{
+         j \in [ i, { \rm len } (s) ] :
+         s _ { k - i } = s _ { k } \ ( \forall k \in [i, j[ )
+     \right\} - i
+    \end{align}
+$
+
+です。
 
 
 ## Code
@@ -45,6 +64,13 @@ layout: default
 
 #include <cstddef>
 #include <vector>
+/*
+ * @brief Z algorithm
+ * @docs string/z_algorithm.md
+ * @see https://snuke.hatenablog.com/entry/2014/12/03/214243
+ * @see https://qiita.com/Pro_ktmr/items/16904c9570aa0953bf05
+ * @see https://ei1333.github.io/luzhiled/snippets/string/z-algorithm.html
+ */
 
 template <class Container, class=typename Container::value_type>
 std::vector<std::size_t> z_algorhthm (Container const& s)
@@ -86,6 +112,13 @@ std::vector<std::size_t> z_algorhthm (Container const& s)
 
 #include <cstddef>
 #include <vector>
+/*
+ * @brief Z algorithm
+ * @docs string/z_algorithm.md
+ * @see https://snuke.hatenablog.com/entry/2014/12/03/214243
+ * @see https://qiita.com/Pro_ktmr/items/16904c9570aa0953bf05
+ * @see https://ei1333.github.io/luzhiled/snippets/string/z-algorithm.html
+ */
 
 template <class Container, class=typename Container::value_type>
 std::vector<std::size_t> z_algorhthm (Container const& s)
