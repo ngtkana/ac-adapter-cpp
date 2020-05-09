@@ -101,5 +101,5 @@ struct nt_trsf {
 
 /*
  * @title NTT
- * @docs docs/integral/ntt.md
+ * @docs docs/integral/ntt_trsf.md
  */
