@@ -31,7 +31,7 @@ layout: default
 
 * category: <a href="../../index.html#25aa2761448ea05599418ee93dd1d5c5">integral</a>
 * <a href="{{ site.github.repository_url }}/blob/master/integral/nt_trsf.hpp">View this file on GitHub</a>
-    - Last commit date: 2020-05-09 17:47:43+09:00
+    - Last commit date: 2020-05-09 08:49:57+00:00
 
 
 
@@ -154,7 +154,7 @@ struct nt_trsf {
 
 /*
  * @title NTT
- * @docs docs/integral/ntt.md
+ * @docs docs/integral/ntt_trsf.md
  */
 
 ```
@@ -414,7 +414,7 @@ struct nt_trsf {
 
 /*
  * @title NTT
- * @docs docs/integral/ntt.md
+ * @docs docs/integral/ntt_trsf.md
  */
 
 ```
