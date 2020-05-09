@@ -70,6 +70,14 @@ layout: default
 ### string
 
 * :heavy_check_mark: <a href="library/string/suffix_array.hpp.html">string/suffix_array.hpp</a>
+* :warning: <a href="library/string/z_algorithm.hpp.html">string/z_algorithm.hpp</a>
+
+
+<div id="098f6bcd4621d373cade4e832627b4f6"></div>
+
+### test
+
+* :warning: <a href="library/test/yosupo-zalgorithm.cpp.html">test/yosupo-zalgorithm.cpp</a>
 
 
 ## Verify Files
