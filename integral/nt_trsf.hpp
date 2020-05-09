@@ -98,3 +98,8 @@ struct nt_trsf {
         return a;
     }
 };
+
+/*
+ * @title NTT
+ * @docs docs/integral/ntt.md
+ */

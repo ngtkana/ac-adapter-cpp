@@ -142,3 +142,7 @@ template <class T, class U> bool operator!=(U x, modint<T> y) { return modint<T>
 using mod_type = int;
 constexpr mod_type mod = 998244353;
 using mint = modint< std::integral_constant<mod_type, mod> >;
+
+/*
+ * @title mint
+ */
