@@ -2,6 +2,13 @@
 
 #include <cstddef>
 #include <vector>
+/*
+ * @brief Z algorithm
+ * @docs string/z_algorithm.md
+ * @see https://snuke.hatenablog.com/entry/2014/12/03/214243
+ * @see https://qiita.com/Pro_ktmr/items/16904c9570aa0953bf05
+ * @see https://ei1333.github.io/luzhiled/snippets/string/z-algorithm.html
+ */
 
 template <class Container, class=typename Container::value_type>
 std::vector<std::size_t> z_algorhthm (Container const& s)
