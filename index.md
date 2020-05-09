@@ -70,14 +70,7 @@ layout: default
 ### string
 
 * :heavy_check_mark: <a href="library/string/suffix_array.hpp.html">string/suffix_array.hpp</a>
-* :warning: <a href="library/string/z_algorithm.hpp.html">Z algorithm <small>(string/z_algorithm.hpp)</small></a>
-
-
-<div id="098f6bcd4621d373cade4e832627b4f6"></div>
-
-### test
-
-* :warning: <a href="library/test/yosupo-zalgorithm.cpp.html">test/yosupo-zalgorithm.cpp</a>
+* :heavy_check_mark: <a href="library/string/z_algorithm.hpp.html">Z algorithm <small>(string/z_algorithm.hpp)</small></a>
 
 
 ## Verify Files
@@ -89,5 +82,6 @@ layout: default
 * :heavy_check_mark: <a href="verify/test/aoj-grl-6-a.test.cpp.html">test/aoj-grl-6-a.test.cpp</a>
 * :heavy_check_mark: <a href="verify/test/yosupo-convolution_mod.test.cpp.html">test/yosupo-convolution_mod.test.cpp</a>
 * :heavy_check_mark: <a href="verify/test/yosupo-suffix-array.test.cpp.html">test/yosupo-suffix-array.test.cpp</a>
+* :heavy_check_mark: <a href="verify/test/yosupo-zalgorithm.test.cpp.html">test/yosupo-zalgorithm.test.cpp</a>
 
 
