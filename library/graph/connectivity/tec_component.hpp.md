@@ -60,25 +60,25 @@ layout: default
 
 メンバ変数を通します。
 
-#### $ \mathtt{ bridges } $
+- $ \mathtt{ bridges } $
 
 橋のリストです。
 橋 $ (u, v) $ は $ u \lt v $ を満たしますが、辞書順でソートはされていません。
 これは構築の計算量オーダーを $ O ( V ) $ に抑えるためです。
 
 
-#### $ \mathtt{ bfree \unicode{95} graph $
+- $ \mathtt{ bfree \unicode{95} graph }$
 
 もとのグラフから橋がなくなったものです。
 多重辺や自己ループもそのままのはずですが、verify はしていませんから、信頼はできません。
 
 
-#### $\mathtt{ count }$
+- $\mathtt{ count }$
 
 2-辺連結成分の個数です。
 
 
-#### $ \mathtt{ cmp } $
+- $ \mathtt{ cmp } $
 
 各頂点の所属する 2-辺連結成分の番号です。
 
