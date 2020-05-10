@@ -6,7 +6,7 @@
 #include <queue>
 #include <limits>
 
-#include "edge.hpp"
+#include "../edge.hpp"
 
 template <class Weight> std::vector<Weight>
 dijkstra(std::vector<std::vector<edge<Weight>>> const& g, std::size_t s)
@@ -38,3 +38,8 @@ dijkstra(std::vector<std::vector<edge<Weight>>> const& g, std::size_t s)
 
     return dist;
 }
+
+/*
+ * @title ダイクストラ法 (Dijkstra)
+ * @docs graph/shortest_path/dijkstra.md
+ */
