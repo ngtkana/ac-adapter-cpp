@@ -1,6 +1,6 @@
 #define PROBLEM "https://onlinejudge.u-aizu.ac.jp/courses/library/5/GRL/all/GRL_5_C"
 
-#include "../tree/eular_tour_lca.hpp"
+#include "../graph/tree/eular_tour_lca.hpp"
 
 #include <cassert>
 #include <cstddef>
