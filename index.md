@@ -57,6 +57,13 @@ layout: default
 * :heavy_check_mark: <a href="library/graph/edge.hpp.html">graph/edge.hpp</a>
 
 
+<div id="419122d444c505324448ed1b2f731265"></div>
+
+### graph/connectivity
+
+* :heavy_check_mark: <a href="library/graph/connectivity/tec_component.hpp.html">2-辺連結成分分解 (Two-edges components)</a>
+
+
 <div id="2af6c4bb6ad7cfa010303133dc15971f"></div>
 
 ### graph/flow
@@ -99,12 +106,14 @@ layout: default
 * :heavy_check_mark: <a href="verify/test/aoj-grl-1-a.test.cpp.html">test/aoj-grl-1-a.test.cpp</a>
 * :heavy_check_mark: <a href="verify/test/aoj-grl-2-a.test.cpp.html">test/aoj-grl-2-a.test.cpp</a>
 * :heavy_check_mark: <a href="verify/test/aoj-grl-2-b.test.cpp.html">test/aoj-grl-2-b.test.cpp</a>
+* :heavy_check_mark: <a href="verify/test/aoj-grl-3-b.test.cpp.html">test/aoj-grl-3-b.test.cpp</a>
 * :heavy_check_mark: <a href="verify/test/aoj-grl-5-c.test.cpp.html">test/aoj-grl-5-c.test.cpp</a>
 * :heavy_check_mark: <a href="verify/test/aoj-grl-6-a-1.test.cpp.html">test/aoj-grl-6-a-1.test.cpp</a>
 * :heavy_check_mark: <a href="verify/test/aoj-grl-6-a-2.test.cpp.html">test/aoj-grl-6-a-2.test.cpp</a>
 * :heavy_check_mark: <a href="verify/test/aoj-grl-6-a.test.cpp.html">test/aoj-grl-6-a.test.cpp</a>
 * :heavy_check_mark: <a href="verify/test/yosupo-convolution_mod.test.cpp.html">test/yosupo-convolution_mod.test.cpp</a>
 * :heavy_check_mark: <a href="verify/test/yosupo-suffix-array.test.cpp.html">test/yosupo-suffix-array.test.cpp</a>
+* :heavy_check_mark: <a href="verify/test/yosupo-two-edge-connected-components.test.cpp.html">test/yosupo-two-edge-connected-components.test.cpp</a>
 * :heavy_check_mark: <a href="verify/test/yosupo-zalgorithm.test.cpp.html">test/yosupo-zalgorithm.test.cpp</a>
 
 
