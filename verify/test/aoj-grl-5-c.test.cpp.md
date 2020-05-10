@@ -31,7 +31,7 @@ layout: default
 
 * category: <a href="../../index.html#098f6bcd4621d373cade4e832627b4f6">test</a>
 * <a href="{{ site.github.repository_url }}/blob/master/test/aoj-grl-5-c.test.cpp">View this file on GitHub</a>
-    - Last commit date: 2020-05-10 13:54:36+09:00
+    - Last commit date: 2020-05-10 14:04:05+09:00
 
 
 * see: <a href="https://onlinejudge.u-aizu.ac.jp/courses/library/5/GRL/all/GRL_5_C">https://onlinejudge.u-aizu.ac.jp/courses/library/5/GRL/all/GRL_5_C</a>
@@ -39,7 +39,7 @@ layout: default
 
 ## Depends on
 
-* :heavy_check_mark: <a href="../../library/tree/eular_tour_lca.hpp.html">Eular tour による LCA</a>
+* :heavy_check_mark: <a href="../../library/graph/tree/eular_tour_lca.hpp.html">Eular tour による LCA (LCA by Eular tour)</a>
 
 
 ## Code
@@ -49,7 +49,7 @@ layout: default
 ```cpp
 #define PROBLEM "https://onlinejudge.u-aizu.ac.jp/courses/library/5/GRL/all/GRL_5_C"
 
-#include "../tree/eular_tour_lca.hpp"
+#include "../graph/tree/eular_tour_lca.hpp"
 
 #include <cassert>
 #include <cstddef>
@@ -96,7 +96,7 @@ int main() {
 #line 1 "test/aoj-grl-5-c.test.cpp"
 #define PROBLEM "https://onlinejudge.u-aizu.ac.jp/courses/library/5/GRL/all/GRL_5_C"
 
-#line 2 "tree/eular_tour_lca.hpp"
+#line 2 "graph/tree/eular_tour_lca.hpp"
 
 #include <cstddef>
 #include <cassert>
@@ -158,7 +158,7 @@ struct eular_tour_lca
 };
 
 /*
- * @title Eular tour による LCA
+ * @title Eular tour による LCA (LCA by Eular tour)
  * @docs tree/eular_tour_lca.md
  */
 #line 4 "test/aoj-grl-5-c.test.cpp"

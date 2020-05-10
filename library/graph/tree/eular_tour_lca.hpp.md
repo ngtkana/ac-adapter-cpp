@@ -21,48 +21,24 @@ layout: default
 
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/jquery-balloon-js@1.1.2/jquery.balloon.min.js" integrity="sha256-ZEYs9VrgAeNuPvs15E39OsyOJaIkXEEt10fzxJ20+2I=" crossorigin="anonymous"></script>
-<script type="text/javascript" src="../../assets/js/copy-button.js"></script>
-<link rel="stylesheet" href="../../assets/css/copy-button.css" />
+<script type="text/javascript" src="../../../assets/js/copy-button.js"></script>
+<link rel="stylesheet" href="../../../assets/css/copy-button.css" />
 
 
-# :heavy_check_mark: Eular tour による LCA
+# :heavy_check_mark: Eular tour による LCA (LCA by Eular tour)
 
-<a href="../../index.html">Back to top page</a>
+<a href="../../../index.html">Back to top page</a>
 
-* category: <a href="../../index.html#c0af77cf8294ff93a5cdb2963ca9f038">tree</a>
-* <a href="{{ site.github.repository_url }}/blob/master/tree/eular_tour_lca.hpp">View this file on GitHub</a>
-    - Last commit date: 2020-05-10 13:54:36+09:00
-
-
+* category: <a href="../../../index.html#28790b6202284cbbffc9d712b59f4b80">graph/tree</a>
+* <a href="{{ site.github.repository_url }}/blob/master/graph/tree/eular_tour_lca.hpp">View this file on GitHub</a>
+    - Last commit date: 2020-05-10 14:04:05+09:00
 
 
-## コンストラクタ
-
-`std::size_t` 型の辺を持つグラフを受け取ります。
-
-## 困りごと
-
-注意なのですが、例えば `long long` 型の辺は受け取れません。
-
-ここをテンプレートにしてもよいのですが、それならば、
-
-```cpp
-template <class Edge> struct edge_adaptor {};
-```
-
-のようなアダプターを作って、特殊化して渡すのが良さそうに感じるのですが、
-ちょっと仰々しいですし、やるならばもっと考えて、上手に行いたいです。
-このあたりの抽象化は、いまはまだ急がないことにしましょう。
-
-
-## API
-
-`get_lca(i, j)` は 2 つの `std::size_t` 型の引数を受け取り、LCA を返します。
 
 
 ## Verified with
 
-* :heavy_check_mark: <a href="../../verify/test/aoj-grl-5-c.test.cpp.html">test/aoj-grl-5-c.test.cpp</a>
+* :heavy_check_mark: <a href="../../../verify/test/aoj-grl-5-c.test.cpp.html">test/aoj-grl-5-c.test.cpp</a>
 
 
 ## Code
@@ -132,7 +108,7 @@ struct eular_tour_lca
 };
 
 /*
- * @title Eular tour による LCA
+ * @title Eular tour による LCA (LCA by Eular tour)
  * @docs tree/eular_tour_lca.md
  */
 
@@ -142,7 +118,7 @@ struct eular_tour_lca
 <a id="bundled"></a>
 {% raw %}
 ```cpp
-#line 2 "tree/eular_tour_lca.hpp"
+#line 2 "graph/tree/eular_tour_lca.hpp"
 
 #include <cstddef>
 #include <cassert>
@@ -204,12 +180,12 @@ struct eular_tour_lca
 };
 
 /*
- * @title Eular tour による LCA
+ * @title Eular tour による LCA (LCA by Eular tour)
  * @docs tree/eular_tour_lca.md
  */
 
 ```
 {% endraw %}
 
-<a href="../../index.html">Back to top page</a>
+<a href="../../../index.html">Back to top page</a>
 
