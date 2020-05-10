@@ -60,6 +60,6 @@ struct eular_tour_lca
 };
 
 /*
- * @title Eular tour による LCA
+ * @title Eular tour による LCA (LCA by Eular tour)
  * @docs tree/eular_tour_lca.md
  */
