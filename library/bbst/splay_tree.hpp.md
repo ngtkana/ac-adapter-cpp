@@ -36,7 +36,7 @@ layout: default
 
 
 
-## $ \mathtt { struct splay \unicode { 95 } node } $
+## 構造体$ \mathtt { splay \unicode { 95 } node } $
 
 ### 構築
 
@@ -53,7 +53,7 @@ layout: default
 
 - $ \mathtt { rsize() } $: 右の子のサイズを返します。いない場合は$ 0 $です。
 
-- $ \mathtt { to \unicode {95} vec() } $: 値を順番に$ vector $に入れて返します。
+- $ \mathtt { to \unicode {95} vec() } $: 値を順番に$ \mathtt { vector } $に入れて返します。
 
 - $ \mathtt { to \unicode {95} vec \unicode {95} with (f) } $: 関数$ f: \mathtt{ splay \unicode { 95 } node } \rightarrow T$ で射影した結果を$ \mathtt{ vector }$に入れて返します。
 
@@ -67,16 +67,16 @@ layout: default
 
 ### 変形ロボとしての基本動作
 
-- $ \mathtt { rotate() } $: 回転をして、自分を一つ上に挙げます。親がいない場合は実行時エラーです。操作の終了語、親、自分の$ update() $が呼ばれます。
+- $ \mathtt { rotate() } $: 回転をして、自分を一つ上に挙げます。親がいない場合は実行時エラーです。操作の終了語、親、自分の$ \mathtt { update() } $が呼ばれます。
 
-- $ \mathtt { splay() } $: 自分が根になるまで、自分や親の$ rotate() $を呼び続けます。
+- $ \mathtt { splay() } $: 自分が根になるまで、自分や親の$ \mathtt { rotate() } $を呼び続けます。
 
 
 ### 平衡順序木の操作
 
 - $ \mathtt { get(i) } $: 自分の部分木のうち、ひだりから$ i $番目のものを探して根まで持っていき、それへのポインターを返します。
 
-- $ \mathtt { partition \unicode { 95 } point ( f ) } $: $ f $が$ [ 0, i [ $で$ \mathtt{ true }$、$ [ i, \mathtt{ size } [ $で$ \mathtt{ false }$ となるような$ i $ を返します。ただし区分化されている必要があります。また、$f : \mathtt{ splay \unicode {95} node } \rightarrow \mathtt{ bool } $です。
+- $ \mathtt { partition \unicode { 95 } point ( f ) } $: 術語 $f : \mathtt{ splay \unicode {95} node } \rightarrow \mathtt{ bool } $ を受け取り、$[ 0, i [ $で$ \mathtt{ true }$、$ [ i, \mathtt{ size } [ $で$ \mathtt{ false }$ となるような$ i $ を返します。ただし区分化されている必要があります。
 
 - $ \mathtt { merge(l, r) } $: $ r $の左下に$ l $をつけます。
 
@@ -92,56 +92,57 @@ layout: default
 - $ \mathtt { fold(l, r) } $: 自分の部分木の中で$ [l, r[ $に対応する添字部分の値を集約します。添字がおかしいときには実行時エラーです。
 
 
-## $ \mathtt { struct splay \unicode { 95 } tree } $
+## 構造体 $ \mathtt { splay \unicode { 95 } tree } $
 
-中身は$ unique \unicode { 95 } ptr $の$vector$ と、根の添字番号です。空のときには根は$ -1 $ ( = `std::numeric_limits<std::size_t>::max()`) になっています。
+中身は$ unique \unicode { 95 } ptr $の$ \mathtt {vector}$ と、根の添字番号です。空のときには根は$ -1 $ ( = `std::numeric_limits<std::size_t>::max()`) になっています。
 
 ### 構築
 
-- $ \mathtt splay \unicode { 95 } tree(n) $: $n$個のノードが左下から右上に向かって一直線になったスプレー木を構築します。ノードはデフォルト構築されたあと、$ \mathtt { merge } $が呼ばれます。
+- $ \mathtt { splay \unicode { 95 } tree (n) } $: $n$個のノードが左下から右上に向かって一直線になったスプレー木を構築します。ノードはデフォルト構築されたあと、$ \mathtt { merge } $が呼ばれます。
 
-- $ \mathtt splay \unicode { 95 } tree(a) $: 値の入った$ vector $を受け取り、スプレー木を構築します。
+- $ \mathtt { splay \unicode { 95 } tree (a) } $: 値の入った$ \mathtt {vector} $を受け取り、スプレー木を構築します。
 
 
 ### オブザーバー（ $\mathtt{ const }$ がついているとは限りません。）
 
-- $ \mathtt{ empty() } $: 空ならば$ true $です。
+- $ \mathtt{ empty() } $: 空ならば$ \mathtt { true } $です。
 
 - $ \mathtt{ size() } $: サイズを返します。
 
 - $ \mathtt{ get(i) } $: $i$ 番目の値を返します。
 
-- $ \mathtt{ fold \unicode all() }$: すべてを畳み込んだ値を返します。空ならば$ \mathtt { id }$ですし、空でなければ根の$ \mathtt { acc } $です。
+- $ \mathtt{ fold \unicode {95} all() }$: すべてを畳み込んだ値を返します。空ならば$ \mathtt { id }$ですし、空でなければ根の$ \mathtt { acc } $です。
 
 - $ \mathtt{ fold(l, r) }$: 区間 $[l, r[$ を畳み込んだ値を返します。
 
 - $ \mathtt{ partion \unicode { 95 } point (f) } $: 空ならば$ 0 $です。空でなければ根の同名のメンバ関数を呼びます。
 
-- $ \mathtt{ lower \unicode { 95 } bound (x, cmp=less) }$: ソート済みであるとして、値が$ x $以上の最も左の添字を返します。存在しない場合は$ \mathtt{ size } $を返します。内部では$ partition \unicode {95} point $に転送をしています。
+- $ \mathtt{ lower \unicode { 95 } bound (x, cmp=less) }$: ソート済みであるとして、値が$ x $以上の最も左の添字を返します。存在しない場合は$ \mathtt{ size } $を返します。内部では$ \mathtt { partition \unicode {95} point } $に転送をしています。
 
-- $ \mathtt{ upper \unicode { 95 } bound (x, cmp=less) }$: ソート済みであるとして、値が$ x $を超える最も左の添字を返します。存在しない場合は$ \mathtt{ size } $を返します。内部では$ partition \unicode {95} point $に転送をしています。
+- $ \mathtt{ upper \unicode { 95 } bound (x, cmp=less) }$: ソート済みであるとして、値が$ x $を超える最も左の添字を返します。存在しない場合は$ \mathtt{ size } $を返します。内部では$ \mathtt { partition \unicode {95} point } $に転送をしています。
 
 - $ \mathtt{ to \unicode {95} vec() }$: 値を$ \mathtt{ vector }$にコレクトします。
 
-- $ \mathtt{ to \unicode {95} vec \unicode {95 } with(f) }$: 関数$ f: \mathtt{ splay \unicode {95} node } \rightarrow T $で射影した結果を$ vector $にコレクトです。
+- $ \mathtt{ to \unicode {95} vec \unicode {95 } with(f) }$: 関数$ f: \mathtt{ splay \unicode {95} node } \rightarrow T $で射影した結果を$ \mathtt { vector } $にコレクトです。
 
 ### 更新
 
 - $ \mathtt{ set(i, x) } $: $ i $ 番目の値を$ x $にセットします。
 
-- $ \mathtt{ add(i, x) } $: $ i $ 番目の値を$ get(i) + x $にセットします。
+- $ \mathtt{ add(i, x) } $: $ i $ 番目の値を$ mathtt{get}(i) + x $にセットします。
 
-- $ \mathtt{ sub(i, x) } $: $ i $ 番目の値を$ get(i) - x $にセットします。
+- $ \mathtt{ sub(i, x) } $: $ i $ 番目の値を$ mathtt{get}(i) - x $にセットします。
 
-- $ \mathtt{ mul(i, x) } $: $ i $ 番目の値を$ get(i) * x $にセットします。
+- $ \mathtt{ mul(i, x) } $: $ i $ 番目の値を$ mathtt{get}(i) * x $にセットします。
 
-- $ \mathtt{ div(i, x) } $: $ i $ 番目の値を$ get(i) / x $にセットします。
+- $ \mathtt{ div(i, x) } $: $ i $ 番目の値を$ mathtt{get}(i) / x $にセットします。
 
-- $ \mathtt{ map(i, f) } $: $ i $ 番目の値を$ f(get(i)) $にセットします。
+- $ \mathtt{ map(i, f) } $: $ i $ 番目の値を$ f(mathtt{get}(i)) $にセットします。
 
 
 ## Verified with
 
+* :heavy_check_mark: <a href="../../verify/test/aoj-alds1-4-b.test.cpp.html">test/aoj-alds1-4-b.test.cpp</a>
 * :heavy_check_mark: <a href="../../verify/test/aoj-grl-2-a.test.cpp.html">test/aoj-grl-2-a.test.cpp</a>
 * :heavy_check_mark: <a href="../../verify/test/aoj-grl-2-b.test.cpp.html">test/aoj-grl-2-b.test.cpp</a>
 
