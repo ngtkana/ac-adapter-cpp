@@ -38,7 +38,7 @@ layout: default
 
 ### bbst
 
-* :heavy_check_mark: <a href="library/bbst/splay_tree.hpp.html">bbst/splay_tree.hpp</a>
+* :heavy_check_mark: <a href="library/bbst/splay_tree.hpp.html">スプレー木 (Splay tree)</a>
 
 
 <div id="cff5497121104c2b8e0cb41ed2083a9b"></div>
