@@ -25,13 +25,13 @@ layout: default
 <link rel="stylesheet" href="../../assets/css/copy-button.css" />
 
 
-# :x: セグメント木 (segtree)
+# :heavy_check_mark: セグメント木 (segtree)
 
 <a href="../../index.html">Back to top page</a>
 
 * category: <a href="../../index.html#eae30ef778b4136fdcc54087b7400598">segtree</a>
 * <a href="{{ site.github.repository_url }}/blob/master/segtree/segtree.hpp">View this file on GitHub</a>
-    - Last commit date: 2020-05-11 23:52:48+09:00
+    - Last commit date: 2020-05-11 23:59:36+09:00
 
 
 
@@ -76,8 +76,8 @@ layout: default
 
 ## Verified with
 
-* :x: <a href="../../verify/test/aoj-dsl-2-a.test.cpp.html">test/aoj-dsl-2-a.test.cpp</a>
-* :x: <a href="../../verify/test/aoj-dsl-2-b.test.cpp.html">test/aoj-dsl-2-b.test.cpp</a>
+* :heavy_check_mark: <a href="../../verify/test/aoj-dsl-2-a.test.cpp.html">test/aoj-dsl-2-a.test.cpp</a>
+* :heavy_check_mark: <a href="../../verify/test/aoj-dsl-2-b.test.cpp.html">test/aoj-dsl-2-b.test.cpp</a>
 
 
 ## Code
@@ -115,7 +115,7 @@ struct segtree
 
     void resize(std::size_t n, value_type init=Monoid::id()) {
         assert(table.empty());
-        table.resize(2*n, value_type);
+        table.resize(2*n, init);
     }
 
     void lazy_set(std::size_t i, value_type x) {

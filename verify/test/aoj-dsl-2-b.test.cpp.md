@@ -25,13 +25,13 @@ layout: default
 <link rel="stylesheet" href="../../assets/css/copy-button.css" />
 
 
-# :x: test/aoj-dsl-2-b.test.cpp
+# :heavy_check_mark: test/aoj-dsl-2-b.test.cpp
 
 <a href="../../index.html">Back to top page</a>
 
 * category: <a href="../../index.html#098f6bcd4621d373cade4e832627b4f6">test</a>
 * <a href="{{ site.github.repository_url }}/blob/master/test/aoj-dsl-2-b.test.cpp">View this file on GitHub</a>
-    - Last commit date: 2020-05-11 23:52:48+09:00
+    - Last commit date: 2020-05-11 23:59:36+09:00
 
 
 * see: <a href="https://onlinejudge.u-aizu.ac.jp/courses/library/3/DSL/all/DSL_2_B">https://onlinejudge.u-aizu.ac.jp/courses/library/3/DSL/all/DSL_2_B</a>
@@ -39,7 +39,7 @@ layout: default
 
 ## Depends on
 
-* :x: <a href="../../library/segtree/segtree.hpp.html">セグメント木 (segtree)</a>
+* :heavy_check_mark: <a href="../../library/segtree/segtree.hpp.html">セグメント木 (segtree)</a>
 
 
 ## Code

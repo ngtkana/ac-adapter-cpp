@@ -98,7 +98,7 @@ layout: default
 
 ### segtree
 
-* :x: <a href="library/segtree/segtree.hpp.html">セグメント木 (segtree)</a>
+* :heavy_check_mark: <a href="library/segtree/segtree.hpp.html">セグメント木 (segtree)</a>
 
 
 <div id="b45cffe084dd3d20d928bee85e7b0f21"></div>
@@ -111,8 +111,8 @@ layout: default
 
 ## Verify Files
 
-* :x: <a href="verify/test/aoj-dsl-2-a.test.cpp.html">test/aoj-dsl-2-a.test.cpp</a>
-* :x: <a href="verify/test/aoj-dsl-2-b.test.cpp.html">test/aoj-dsl-2-b.test.cpp</a>
+* :heavy_check_mark: <a href="verify/test/aoj-dsl-2-a.test.cpp.html">test/aoj-dsl-2-a.test.cpp</a>
+* :heavy_check_mark: <a href="verify/test/aoj-dsl-2-b.test.cpp.html">test/aoj-dsl-2-b.test.cpp</a>
 * :heavy_check_mark: <a href="verify/test/aoj-grl-1-a.test.cpp.html">test/aoj-grl-1-a.test.cpp</a>
 * :heavy_check_mark: <a href="verify/test/aoj-grl-2-a.test.cpp.html">test/aoj-grl-2-a.test.cpp</a>
 * :heavy_check_mark: <a href="verify/test/aoj-grl-2-b.test.cpp.html">test/aoj-grl-2-b.test.cpp</a>
