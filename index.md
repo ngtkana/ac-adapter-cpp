@@ -94,6 +94,13 @@ layout: default
 * :heavy_check_mark: <a href="library/integral/nt_trsf.hpp.html">NTT</a>
 
 
+<div id="eae30ef778b4136fdcc54087b7400598"></div>
+
+### segtree
+
+* :x: <a href="library/segtree/segtree.hpp.html">セグメント木 (segtree)</a>
+
+
 <div id="b45cffe084dd3d20d928bee85e7b0f21"></div>
 
 ### string
@@ -104,6 +111,8 @@ layout: default
 
 ## Verify Files
 
+* :x: <a href="verify/test/aoj-dsl-2-a.test.cpp.html">test/aoj-dsl-2-a.test.cpp</a>
+* :x: <a href="verify/test/aoj-dsl-2-b.test.cpp.html">test/aoj-dsl-2-b.test.cpp</a>
 * :heavy_check_mark: <a href="verify/test/aoj-grl-1-a.test.cpp.html">test/aoj-grl-1-a.test.cpp</a>
 * :heavy_check_mark: <a href="verify/test/aoj-grl-2-a.test.cpp.html">test/aoj-grl-2-a.test.cpp</a>
 * :heavy_check_mark: <a href="verify/test/aoj-grl-2-b.test.cpp.html">test/aoj-grl-2-b.test.cpp</a>
