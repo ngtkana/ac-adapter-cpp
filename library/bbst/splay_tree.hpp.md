@@ -137,7 +137,7 @@ layout: default
 
 - $ \mathtt{ div(i, x) } $: $ i $ 番目の値を$ \mathtt{get}(i) / x $にセットします。
 
-- $ \mathtt{ map(i, f) } $: $ i $ 番目の値を$ f(mathtt{get}(i)) $にセットします。
+- $ \mathtt{ map(i, f) } $: $ i $ 番目の値を$ f(\mathtt{get}(i)) $にセットします。
 
 
 ## Verified with
