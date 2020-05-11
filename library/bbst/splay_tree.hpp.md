@@ -76,7 +76,7 @@ layout: default
 
 - $ \mathtt { get(i) } $: 自分の部分木のうち、ひだりから$ i $番目のものを探して根まで持っていき、それへのポインターを返します。
 
-- $ \mathtt { partition \unicode { 95 } point ( f ) } $: 術語 $f : \mathtt{ splay \unicode {95} node } \rightarrow \mathtt{ bool } $ を受け取り、$[ 0, i [ $で$ \mathtt{ true }$、$ [ i, \mathtt{ size } [ $で$ \mathtt{ false }$ となるような$ i $ を返します。ただし区分化されている必要があります。
+- $ \mathtt { partition \unicode { 95 } point ( f ) } $: 述語 $f : \mathtt{ splay \unicode {95} node } \rightarrow \mathtt{ bool } $ を受け取り、$[ 0, i [ $で$ \mathtt{ true }$、$ [ i, \mathtt{ size } [ $で$ \mathtt{ false }$ となるような$ i $ を返します。ただし区分化されている必要があります。
 
 - $ \mathtt { merge(l, r) } $: $ r $の左下に$ l $をつけます。
 
