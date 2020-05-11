@@ -28,7 +28,7 @@ struct segtree
 
     void resize(std::size_t n, value_type init=Monoid::id()) {
         assert(table.empty());
-        table.resize(2*n, value_type);
+        table.resize(2*n, init);
     }
 
     void lazy_set(std::size_t i, value_type x) {
