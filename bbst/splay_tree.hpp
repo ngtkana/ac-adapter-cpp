@@ -1,3 +1,8 @@
+/*
+ * @title スプレー木 (Splay tree)
+ * @docs bbst/splay_tree.md
+ */
+
 #pragma once
 
 #include <cstddef>
@@ -7,9 +12,9 @@
 #include <vector>
 #include <memory>
 
-// struct splay_node<Monoid>{{{
 template <class Monoid>
-struct splay_node {
+struct splay_node
+{
     using this_type = splay_node<Monoid>;
     using value_type = typename Monoid::value_type;
 
@@ -25,12 +30,7 @@ struct splay_node {
     value_type acc;
 
     splay_node()
-        : parent(nullptr)
-        , left(nullptr)
-        , right(nullptr)
-        , size(1u)
-        , value()
-    {}
+        : parent(nullptr), left(nullptr), right(nullptr), size(1u), value(), acc() {}
 
     splay_node(splay_node const&)=default;
     splay_node(splay_node&&)=default;
@@ -39,13 +39,7 @@ struct splay_node {
     ~splay_node()=default;
 
     splay_node(value_type x)
-        : parent(nullptr)
-        , left(nullptr)
-        , right(nullptr)
-        , size(1u)
-        , value(x)
-        , acc(x)
-    {}
+        : parent(nullptr), left(nullptr), right(nullptr), size(1u), value(x), acc(x) {}
 
     kstate state() const {
         assert(!parent || parent->left==this || parent->right==this);
@@ -58,6 +52,26 @@ struct splay_node {
     std::size_t lsize() const { return left ? left->size : 0u; }
 
     std::size_t rsize() const { return right ? right->size : 0u; }
+
+    std::vector<value_type>
+    to_vec() const {
+        return to_vec_with([](this_type x){ return x.value; });
+    }
+
+    template <class F, class T = std::result_of_t<F(this_type)>> std::vector<T>
+    to_vec_with(F const& f) const {
+        std::vector<T> ans;
+        if (left) {
+            auto lvec = left->to_vec();
+            ans.insert(ans.end(), lvec.begin(), lvec.end());
+        }
+        ans.push_back(f(*this));
+        if (right) {
+            auto rvec = right->to_vec();
+            ans.insert(ans.end(), rvec.begin(), rvec.end());
+        }
+        return ans;
+    }
 
     void update() {
         size = 1u;
@@ -136,8 +150,7 @@ struct splay_node {
     }
 
     template <class F> std::size_t
-    partition_point(F&& f)
-    {
+    partition_point(F&& f) {
         if (f(*this)) {
             return right
                 ? size - right->size + right->partition_point(std::forward<F&&>(f))
@@ -150,8 +163,7 @@ struct splay_node {
     }
 
     static this_type*
-    merge(this_type* l, this_type* r)
-    {
+    merge(this_type* l, this_type* r) {
         if (!l) return r;
         if (!r) return l;
         l->parent = r;
@@ -161,8 +173,7 @@ struct splay_node {
     }
 
     static this_type*
-    merge_from_three(this_type* l, this_type* c, this_type* r)
-    {
+    merge_from_three(this_type* l, this_type* c, this_type* r) {
         l = merge(l, c);
         return merge(l, r);
     }
@@ -173,6 +184,7 @@ struct splay_node {
         assert(i <= root->size);
         if (i==0u) return std::make_pair(nullptr, root);
         if (i==root->size) return std::make_pair(root, nullptr);
+
         root = root->get(i);
         this_type* l = root->left;
         if(l) l->parent = nullptr;
@@ -185,6 +197,7 @@ struct splay_node {
     split_into_three(this_type* root, std::size_t l, std::size_t r)
     {
         assert(0 <= l && l <= r && r <= root->size);
+
         this_type *ltree, *ctree, *lctree, *rtree;
         std::tie(lctree, rtree) = split(root, r);
         std::tie(ltree, ctree) = split(lctree, l);
@@ -199,39 +212,13 @@ struct splay_node {
 
         this_type *lt, *ct, *rt;
         std::tie(lt, ct, rt) = this_type::split_into_three(this, l, r);
-
         assert(ct);
         value_type folded = ct->acc;
-
         this_type* root = this_type::merge_from_three(lt, ct, rt);
-
         return std::make_pair(folded, root);
     }
-
-    std::vector<value_type>
-    to_vec() const
-    {
-        return to_vec_with([](this_type x){ return x.value; });
-    }
-
-    template <class F, class T = std::result_of_t<F(this_type)>> std::vector<T>
-    to_vec_with(F const& f) const
-    {
-        std::vector<T> ans;
-        if (left) {
-            auto lvec = left->to_vec();
-            ans.insert(ans.end(), lvec.begin(), lvec.end());
-        }
-        ans.push_back(f(*this));
-        if (right) {
-            auto rvec = right->to_vec();
-            ans.insert(ans.end(), rvec.begin(), rvec.end());
-        }
-        return ans;
-    }
 };
-/*}}}*/
-// class splay_tree<Monoid>{{{
+
 template <class Monoid>
 class splay_tree {
     using node_type = splay_node<Monoid>;
@@ -274,29 +261,20 @@ public:
 
     bool empty() const { return node.empty(); }
 
-    value_type get(std::size_t i)
-    {
+    std::size_t size() const { return node.size(); }
+
+    value_type get(std::size_t i) {
         assert(0 <= i && i < node.size());
         node_type* root = node.at(root_idx)->get(i);
         root_idx = root->lsize();
         return root->value;
     }
 
-    void set(std::size_t i, value_type x)
-    {
-        assert(0 <= i && i < node.size());
-        node_type* root = node.at(root_idx)->get(i);
-        root->set(x);
-        root_idx =  root->lsize();
-    }
-
-    value_type fold_all() const
-    {
+    value_type fold_all() const {
         return empty() ? Monoid::id() : node.at(root_idx)->acc;
     }
 
-    value_type fold(std::size_t l, std::size_t r)
-    {
+    value_type fold(std::size_t l, std::size_t r) {
         assert(0u <= l && l <= r && r <= node.size());
         if (empty()) {
             return Monoid::id();
@@ -310,36 +288,47 @@ public:
     }
 
     template <class F> std::size_t
-    partition_point(F&& f) const
-    {
+    partition_point(F&& f) const {
         return empty()
             ? 0u
             :node.at(root_idx)->partition_point(std::forward<F&&>(f));
     }
 
-    std::size_t lower_bound(value_type x) const
-    {
-        return partition_point([x](node_type n){ return n.value < x; });
+    template <class Cmp=std::less<value_type>>
+    std::size_t lower_bound(value_type x, Cmp&& cmp={}) const {
+        return partition_point([x, &cmp](node_type n){ return cmp(n.value, x); });
     }
 
-    std::size_t upper_bound(value_type x) const
-    {
-        return partition_point([x](node_type n){ return n.value <= x; });
+    template <class Cmp=std::less<value_type>>
+    std::size_t upper_bound(value_type x, Cmp&& cmp={}) const {
+        return partition_point([x, &cmp](node_type n){ return cmp(x, n.value); });
     }
 
     template <class F, class T = std::result_of_t<F(node_type)>> std::vector<T>
-    to_vec_with(F&& f) const
-    {
+    to_vec_with(F&& f) const {
         return empty()
             ? std::vector<T>{}
             : node.at(root_idx)->to_vec_with(std::forward<F&&>(f));
     }
 
-    std::vector<value_type> to_vec() const
-    {
+    std::vector<value_type> to_vec() const {
         return empty()
             ? std::vector<value_type>{}
             : node.at(root_idx)->to_vec();
     }
+
+    void set(std::size_t i, value_type x) {
+        assert(0 <= i && i < node.size());
+        node_type* root = node.at(root_idx)->get(i);
+        root->set(x);
+        root_idx =  root->lsize();
+    }
+
+    void add(std::size_t i, value_type x) { set(i, get(i) + x); }
+    void sub(std::size_t i, value_type x) { set(i, get(i) - x); }
+    void mul(std::size_t i, value_type x) { set(i, get(i) * x); }
+    void div(std::size_t i, value_type x) { set(i, get(i) / x); }
+
+    template <class F>
+    void map(std::size_t i, F&& f) { set(i, f(get(i))); }
 };
-/*}}}*/
