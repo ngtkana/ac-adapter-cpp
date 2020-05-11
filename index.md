@@ -83,6 +83,7 @@ layout: default
 ### graph/tree
 
 * :heavy_check_mark: <a href="library/graph/tree/eular_tour_lca.hpp.html">Eular tour による LCA (LCA by Eular tour)</a>
+* :heavy_check_mark: <a href="library/graph/tree/hl_decomposition.hpp.html">HL 分解 (heavy-light decomposition)</a>
 
 
 <div id="25aa2761448ea05599418ee93dd1d5c5"></div>
@@ -108,6 +109,7 @@ layout: default
 * :heavy_check_mark: <a href="verify/test/aoj-grl-2-b.test.cpp.html">test/aoj-grl-2-b.test.cpp</a>
 * :heavy_check_mark: <a href="verify/test/aoj-grl-3-b.test.cpp.html">test/aoj-grl-3-b.test.cpp</a>
 * :heavy_check_mark: <a href="verify/test/aoj-grl-5-c.test.cpp.html">test/aoj-grl-5-c.test.cpp</a>
+* :heavy_check_mark: <a href="verify/test/aoj-grl-5-d.test.cpp.html">test/aoj-grl-5-d.test.cpp</a>
 * :heavy_check_mark: <a href="verify/test/aoj-grl-6-a-1.test.cpp.html">test/aoj-grl-6-a-1.test.cpp</a>
 * :heavy_check_mark: <a href="verify/test/aoj-grl-6-a-2.test.cpp.html">test/aoj-grl-6-a-2.test.cpp</a>
 * :heavy_check_mark: <a href="verify/test/aoj-grl-6-a.test.cpp.html">test/aoj-grl-6-a.test.cpp</a>
