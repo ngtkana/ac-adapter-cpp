@@ -56,7 +56,7 @@
 
 ## 構造体 $ \mathtt { splay \unicode { 95 } tree } $
 
-中身は$ unique \unicode { 95 } ptr $の$ \mathtt {vector}$ と、根の添字番号です。空のときには根は$ -1 $ ( = `std::numeric_limits<std::size_t>::max()`) になっています。
+中身は$ \mathtt { unique \unicode { 95 } ptr  }$の$ \mathtt {vector}$ と、根の添字番号です。空のときには根は$ -1 $ ( = `std::numeric_limits<std::size_t>::max()`) になっています。
 
 ### 構築
 
@@ -91,12 +91,12 @@
 
 - $ \mathtt{ set(i, x) } $: $ i $ 番目の値を$ x $にセットします。
 
-- $ \mathtt{ add(i, x) } $: $ i $ 番目の値を$ mathtt{get}(i) + x $にセットします。
+- $ \mathtt{ add(i, x) } $: $ i $ 番目の値を$ \mathtt{get}(i) + x $にセットします。
 
-- $ \mathtt{ sub(i, x) } $: $ i $ 番目の値を$ mathtt{get}(i) - x $にセットします。
+- $ \mathtt{ sub(i, x) } $: $ i $ 番目の値を$ \mathtt{get}(i) - x $にセットします。
 
-- $ \mathtt{ mul(i, x) } $: $ i $ 番目の値を$ mathtt{get}(i) * x $にセットします。
+- $ \mathtt{ mul(i, x) } $: $ i $ 番目の値を$ \mathtt{get}(i) * x $にセットします。
 
-- $ \mathtt{ div(i, x) } $: $ i $ 番目の値を$ mathtt{get}(i) / x $にセットします。
+- $ \mathtt{ div(i, x) } $: $ i $ 番目の値を$ \mathtt{get}(i) / x $にセットします。
 
 - $ \mathtt{ map(i, f) } $: $ i $ 番目の値を$ f(mathtt{get}(i)) $にセットします。
