@@ -49,7 +49,7 @@
 - $ \mathtt { split \unicode { 95 } into \unicode { 95 } three (l, r) }$: 同様に、$l$個、$r - l$個、$\mathtt{ size } - r$個に分けます。
 
 
-## 値の集約
+### 値の集約
 
 - $ \mathtt { fold(l, r) } $: 自分の部分木の中で$ [l, r[ $に対応する添字部分の値を集約します。添字がおかしいときには実行時エラーです。
 
