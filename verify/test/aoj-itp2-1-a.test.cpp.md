@@ -25,16 +25,16 @@ layout: default
 <link rel="stylesheet" href="../../assets/css/copy-button.css" />
 
 
-# :heavy_check_mark: test/aoj-grl-2-b.test.cpp
+# :heavy_check_mark: test/aoj-itp2-1-a.test.cpp
 
 <a href="../../index.html">Back to top page</a>
 
 * category: <a href="../../index.html#098f6bcd4621d373cade4e832627b4f6">test</a>
-* <a href="{{ site.github.repository_url }}/blob/master/test/aoj-grl-2-b.test.cpp">View this file on GitHub</a>
+* <a href="{{ site.github.repository_url }}/blob/master/test/aoj-itp2-1-a.test.cpp">View this file on GitHub</a>
     - Last commit date: 2020-05-12 20:29:34+09:00
 
 
-* see: <a href="https://onlinejudge.u-aizu.ac.jp/courses/library/3/DSL/all/DSL_2_B">https://onlinejudge.u-aizu.ac.jp/courses/library/3/DSL/all/DSL_2_B</a>
+* see: <a href="https://onlinejudge.u-aizu.ac.jp/courses/lesson/8/ITP2/1/ITP2_1_A">https://onlinejudge.u-aizu.ac.jp/courses/lesson/8/ITP2/1/ITP2_1_A</a>
 
 
 ## Depends on
@@ -48,50 +48,50 @@ layout: default
 <a id="unbundled"></a>
 {% raw %}
 ```cpp
-#define PROBLEM "https://onlinejudge.u-aizu.ac.jp/courses/library/3/DSL/all/DSL_2_B"
+#define PROBLEM "https://onlinejudge.u-aizu.ac.jp/courses/lesson/8/ITP2/1/ITP2_1_A"
 
+#include <cstddef>
+#include <iostream>
+
+#include "../others/cstdint2.hpp"
 #include "../bbst/splay_tree.hpp"
 
-#include <iostream>
-#include <vector>
-#include <tuple>
-
-// add-monoid{{{
 template <class Value> struct add_monoid_t {
     using value_type = Value;
     static value_type op(value_type l, value_type r) { return l + r; }
-    static const value_type id() { return 0; };
+    static const value_type id() { return 0; }
 };
-/*}}}*/
 
-int main() {
-    std::size_t n, q;
-    std::cin >> n >> q;
+int main(){
 
-    splay_tree<add_monoid_t<int>> sp(n);
+    splay_tree<add_monoid_t<i32>> sp;
 
-    for (std::size_t i=0; i<q; i++) {
-        int c;
+    usize q;
+    std::cin >> q;
+    while (q--) {
+        u32 c;
         std::cin >> c;
 
         if (c==0) {
-            std::size_t i;
-            int x;
-            std::cin >> i >> x;
-            i--;
+            i32 x;
+            std::cin >> x;
 
-            sp.set(i, sp.get(i) + x);
+            sp.push_back(x);
         }
 
         if (c==1) {
-            std::size_t l, r;
-            std::cin >> l >> r;
-            l--;
+            usize i;
+            std::cin >> i;
 
-            std::cout << sp.fold(l, r) << '\n';
+            std::cout << sp.get(i) << '\n';
+        }
+
+        if (c==2) {
+            sp.pop_back();
         }
     }
 }
+
 
 ```
 {% endraw %}

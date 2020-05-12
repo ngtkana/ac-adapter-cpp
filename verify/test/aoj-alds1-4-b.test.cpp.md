@@ -31,7 +31,7 @@ layout: default
 
 * category: <a href="../../index.html#098f6bcd4621d373cade4e832627b4f6">test</a>
 * <a href="{{ site.github.repository_url }}/blob/master/test/aoj-alds1-4-b.test.cpp">View this file on GitHub</a>
-    - Last commit date: 2020-05-12 01:37:14+09:00
+    - Last commit date: 2020-05-12 20:29:34+09:00
 
 
 * see: <a href="https://onlinejudge.u-aizu.ac.jp/courses/lesson/1/ALDS1/all/ALDS1_4_B">https://onlinejudge.u-aizu.ac.jp/courses/lesson/1/ALDS1/all/ALDS1_4_B</a>
@@ -40,6 +40,7 @@ layout: default
 ## Depends on
 
 * :heavy_check_mark: <a href="../../library/bbst/splay_tree.hpp.html">スプレー木 (Splay tree)</a>
+* :heavy_check_mark: <a href="../../library/others/cstdint2.hpp.html">others/cstdint2.hpp</a>
 
 
 ## Code
