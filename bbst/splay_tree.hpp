@@ -12,6 +12,8 @@
 #include <vector>
 #include <memory>
 
+#include "../others/cstdint2.hpp"
+
 template <class Monoid>
 struct splay_node
 {
@@ -25,7 +27,7 @@ struct splay_node
     };
 
     this_type *parent, *left, *right;
-    std::size_t size;
+    usize size;
     value_type value;
     value_type acc;
 
@@ -49,27 +51,26 @@ struct splay_node
         throw;
     }
 
-    std::size_t lsize() const { return left ? left->size : 0u; }
+    usize lsize() const { return left ? left->size : 0u; }
+    usize rsize() const { return right ? right->size : 0u; }
 
-    std::size_t rsize() const { return right ? right->size : 0u; }
-
-    std::vector<value_type>
-    to_vec() const {
-        return to_vec_with([](this_type x){ return x.value; });
+    static std::vector<value_type>
+    to_vec(this_type const* root) {
+        return to_vec_with(root, [](this_type x){ return x.value; });
     }
 
-    template <class F, class T = std::result_of_t<F(this_type)>> std::vector<T>
-    to_vec_with(F const& f) const {
+    template <class F, class T = std::result_of_t<F(this_type)>>
+    static std::vector<T>
+    to_vec_with(this_type const* root, F&& f) {
         std::vector<T> ans;
-        if (left) {
-            auto lvec = left->to_vec();
-            ans.insert(ans.end(), lvec.begin(), lvec.end());
-        }
-        ans.push_back(f(*this));
-        if (right) {
-            auto rvec = right->to_vec();
-            ans.insert(ans.end(), rvec.begin(), rvec.end());
-        }
+
+        auto dfs = [&ans, &f](auto&&dfs_, this_type const* x) -> void {
+            if (!x) return;
+            dfs_(dfs_, x->left);
+            ans.push_back(f(*x));
+            dfs_(dfs_, x->right);
+        };
+        dfs(dfs, root);
         return ans;
     }
 
@@ -135,7 +136,7 @@ struct splay_node
         return now;
     }
 
-    this_type* get(std::size_t i) {
+    this_type* get(usize i) {
         assert(i < size);
         if (i == lsize()) {
             splay();
@@ -149,23 +150,27 @@ struct splay_node
         }
     }
 
-    template <class F> std::size_t
-    partition_point(F&& f) {
-        if (f(*this)) {
-            return right
-                ? size - right->size + right->partition_point(std::forward<F&&>(f))
-                : size;
-        } else {
-            return left
-                ? left->partition_point(std::forward<F&&>(f))
-                : 0u;
-        }
+    template <class F> static usize
+    partition_point(this_type const* root, F&& f) {
+        auto dfs = [&f](auto&& dfs_, this_type const* x) -> usize {
+            if (!x) {
+                return 0u;
+            } else if (f(*x)) {
+                return x->size - x->rsize() + dfs_(dfs_, x->right);
+            } else {
+                return dfs_(dfs_, x->left);
+            }
+        };
+        return dfs(dfs, root);
     }
 
     static this_type*
     merge(this_type* l, this_type* r) {
+        if (!l && !r) return nullptr;
+        assert(l!=r);
         if (!l) return r;
         if (!r) return l;
+        r = r->get(0u);
         l->parent = r;
         r->left = l;
         r->update();
@@ -179,8 +184,12 @@ struct splay_node
     }
 
     static std::pair<this_type*, this_type*>
-    split(this_type* root, std::size_t i)
+    split(this_type* root, usize i)
     {
+        if (!root) {
+            assert(i==0);
+            return std::make_pair(nullptr, nullptr);
+        }
         assert(i <= root->size);
         if (i==0u) return std::make_pair(nullptr, root);
         if (i==root->size) return std::make_pair(root, nullptr);
@@ -194,7 +203,7 @@ struct splay_node
     }
 
     static std::tuple<this_type*, this_type*, this_type*>
-    split_into_three(this_type* root, std::size_t l, std::size_t r)
+    split_into_three(this_type* root, usize l, usize r)
     {
         assert(0 <= l && l <= r && r <= root->size);
 
@@ -205,7 +214,7 @@ struct splay_node
     }
 
     std::pair<value_type, this_type*>
-    fold(std::size_t l, std::size_t r)
+    fold(usize l, usize r)
     {
         assert(0 <= l && l <= r && r <= size);
         if (l==r) return std::make_pair(Monoid::id(), this);
@@ -225,110 +234,160 @@ class splay_tree {
     using value_type = typename Monoid::value_type;
 
     std::vector<std::unique_ptr<node_type>> node;
-    std::size_t root_idx;
+    node_type* root;
+    usize size_;
 
 public:
-    splay_tree()=default;
+    splay_tree()
+        : splay_tree(0u) {}
+
     splay_tree(splay_tree const&)=delete;
     splay_tree(splay_tree&&)=default;
     splay_tree& operator=(splay_tree const&)=delete;
     splay_tree& operator=(splay_tree&&)=default;
     ~splay_tree()=default;
 
-    splay_tree(std::size_t n)
-        : node(n)
+    splay_tree(usize n)
+        : node(n), size_(n)
     {
         for (auto&& p : node) {
             p = std::make_unique<node_type>(Monoid::id());
         }
-        for (std::size_t i=0; i<n-1; i++) {
-            node_type::merge(node.at(i).get(), node.at(i+1).get());
+        for (usize i=1; i<n; i++) {
+            node_type::merge(node.at(i-1).get(), node.at(i).get());
         }
-        root_idx = n-1;
+        root = n==0
+            ? nullptr
+            : node.back().get()
+            ;
     }
 
     splay_tree(std::vector<value_type> const& a)
         : splay_tree(a.size())
     {
-        for (std::size_t i=0; i<a.size(); i++) {
+        for (usize i=0; i<a.size(); i++) {
             node.at(i) = std::make_unique<node_type>(a.at(i));
         }
-        for (std::size_t i=0; i<a.size()-1; i++) {
+        for (usize i=0; i<a.size()-1; i++) {
             node_type::merge(node.at(i).get(), node.at(i+1).get());
         }
-        root_idx = a.size()-1;
+        root = empty()
+            ? nullptr
+            : node.back().get()
+            ;
     }
 
-    bool empty() const { return node.empty(); }
+    bool empty() const { return size()==0u; }
 
-    std::size_t size() const { return node.size(); }
+    usize size() const { return size_; }
 
-    value_type get(std::size_t i) {
+    value_type get(usize i) {
         assert(0 <= i && i < node.size());
-        node_type* root = node.at(root_idx)->get(i);
-        root_idx = root->lsize();
+        root = root->get(i);
         return root->value;
     }
 
     value_type fold_all() const {
-        return empty() ? Monoid::id() : node.at(root_idx)->acc;
+        return empty() ? Monoid::id() : root->acc;
     }
 
-    value_type fold(std::size_t l, std::size_t r) {
+    value_type fold(usize l, usize r) {
         assert(0u <= l && l <= r && r <= node.size());
         if (empty()) {
             return Monoid::id();
         } else {
             value_type ret;
-            node_type *root;
-            std::tie(ret, root) = node.at(root_idx)->fold(l, r);
-            root_idx = root->lsize();
+            std::tie(ret, root) = root->fold(l, r);
             return ret;
         }
     }
 
-    template <class F> std::size_t
+    template <class F> usize
     partition_point(F&& f) const {
-        return empty()
-            ? 0u
-            :node.at(root_idx)->partition_point(std::forward<F&&>(f));
+        return node_type::partition_point(root, std::forward<F&&>(f));
     }
 
     template <class Cmp=std::less<value_type>>
-    std::size_t lower_bound(value_type x, Cmp&& cmp={}) const {
+    usize lower_bound(value_type x, Cmp&& cmp={}) const {
         return partition_point([x, &cmp](node_type n){ return cmp(n.value, x); });
     }
 
     template <class Cmp=std::less<value_type>>
-    std::size_t upper_bound(value_type x, Cmp&& cmp={}) const {
+    usize upper_bound(value_type x, Cmp&& cmp={}) const {
         return partition_point([x, &cmp](node_type n){ return cmp(x, n.value); });
     }
 
     template <class F, class T = std::result_of_t<F(node_type)>> std::vector<T>
     to_vec_with(F&& f) const {
-        return empty()
-            ? std::vector<T>{}
-            : node.at(root_idx)->to_vec_with(std::forward<F&&>(f));
+        return node_type::to_vec_with(root, std::forward<F&&>(f));
     }
 
     std::vector<value_type> to_vec() const {
-        return empty()
-            ? std::vector<value_type>{}
-            : node.at(root_idx)->to_vec();
+        return node_type::to_vec(root);
     }
 
-    void set(std::size_t i, value_type x) {
+    void set(usize i, value_type x) {
         assert(0 <= i && i < node.size());
-        node_type* root = node.at(root_idx)->get(i);
+        root = root->get(i);
         root->set(x);
-        root_idx =  root->lsize();
     }
 
-    void add(std::size_t i, value_type x) { set(i, get(i) + x); }
-    void sub(std::size_t i, value_type x) { set(i, get(i) - x); }
-    void mul(std::size_t i, value_type x) { set(i, get(i) * x); }
-    void div(std::size_t i, value_type x) { set(i, get(i) / x); }
+    void add(usize i, value_type x) { set(i, get(i) + x); }
+    void sub(usize i, value_type x) { set(i, get(i) - x); }
+    void mul(usize i, value_type x) { set(i, get(i) * x); }
+    void div(usize i, value_type x) { set(i, get(i) / x); }
 
     template <class F>
-    void map(std::size_t i, F&& f) { set(i, f(get(i))); }
+    void map(usize i, F&& f) { set(i, f(get(i))); }
+
+    void push_front(value_type x) {
+        node.push_back(std::make_unique<node_type>(x));
+        root = node_type::merge(node.back().get(), root);
+        ++size_;
+    }
+
+    void pop_front() {
+        assert(!empty());
+        if (1u==size_) {
+            node.clear();
+            root = nullptr;
+        } else {
+            root = node_type::split(root, 1).second;
+        }
+        --size_;
+    }
+
+    void push_back(value_type x) {
+        node.push_back(std::make_unique<node_type>(x));
+        root = node_type::merge(root, node.back().get());
+        ++size_;
+    }
+
+    void pop_back() {
+        assert(!empty());
+        if (1u==size_) {
+            node.clear();
+            root = nullptr;
+        } else {
+            root = node_type::split(root, size()-1).first;
+        }
+        --size_;
+    }
+
+    void insert(usize i, value_type x) {
+        assert(i <= size());
+        node_type *l, *r;
+        std::tie(l, r) = node_type::split(root, i);
+        node.push_back(std::make_unique<node_type>(x));
+        root = node_type::merge_from_three(l, node.back().get(), r);
+        size_++;
+    }
+
+    void erase(usize i) {
+        assert(i < size());
+        node_type *l, *r;
+        std::tie(l, std::ignore, r) = node_type::split_into_three(root, i, i+1);
+        root = node_type::merge(l, r);
+        size_--;
+    }
 };
