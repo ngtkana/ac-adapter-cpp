@@ -346,6 +346,21 @@ public:
         ++size_;
     }
 
+    void push_back(value_type x) {
+        node.push_back(std::make_unique<node_type>(x));
+        root = node_type::merge(root, node.back().get());
+        ++size_;
+    }
+
+    void insert(usize i, value_type x) {
+        assert(i <= size());
+        node_type *l, *r;
+        std::tie(l, r) = node_type::split(root, i);
+        node.push_back(std::make_unique<node_type>(x));
+        root = node_type::merge_from_three(l, node.back().get(), r);
+        size_++;
+    }
+
     void pop_front() {
         assert(!empty());
         if (1u==size_) {
@@ -357,12 +372,6 @@ public:
         --size_;
     }
 
-    void push_back(value_type x) {
-        node.push_back(std::make_unique<node_type>(x));
-        root = node_type::merge(root, node.back().get());
-        ++size_;
-    }
-
     void pop_back() {
         assert(!empty());
         if (1u==size_) {
@@ -372,15 +381,6 @@ public:
             root = node_type::split(root, size()-1).first;
         }
         --size_;
-    }
-
-    void insert(usize i, value_type x) {
-        assert(i <= size());
-        node_type *l, *r;
-        std::tie(l, r) = node_type::split(root, i);
-        node.push_back(std::make_unique<node_type>(x));
-        root = node_type::merge_from_three(l, node.back().get(), r);
-        size_++;
     }
 
     void erase(usize i) {
