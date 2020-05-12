@@ -1,102 +1,133 @@
-## 構造体$ \mathtt { splay \unicode { 95 } node } $
+## 構造体 $ \mathtt { splay \unicode { 95 } node } $ 
 
 ### 構築
 
-- $ \mathtt { splay \unicode { 95 } node() } $: ポインタをすべて$ \mathtt { nullptr } $で初期化し、サイズを$ 1 $にし、値をデフォルト構築します。
+- $ \mathtt { splay \unicode { 95 } node() } $ : ポインタをすべて $ \mathtt { nullptr } $ で初期化し、サイズを $ 1 $ にし、値をデフォルト構築します。
 
-- $ \mathtt { splay \unicode { 95 } node(x) } $: ポインタをすべて$ \mathtt { nullptr } $で初期化し、サイズを$ 1 $にし、値を$ x $で初期化します。
+- $ \mathtt { splay \unicode { 95 } node(x) } $ : ポインタをすべて $ \mathtt { nullptr } $ で初期化し、サイズを $ 1 $ にし、値を $ x $ で初期化します。
 
 
 ### オブザーバー
 
-- $ \mathtt { state() } $: 自分が何者であるのかを知らしめます。
+- $ \mathtt { state() } $ : 自分が何者であるのかを知らしめます。
 
-- $ \mathtt { lsize() } $: 左の子のサイズを返します。いない場合は$ 0 $です。
+- $ \mathtt { lsize() } $ : 左の子のサイズを返します。いない場合は $ 0 $ です。
 
-- $ \mathtt { rsize() } $: 右の子のサイズを返します。いない場合は$ 0 $です。
+- $ \mathtt { rsize() } $ : 右の子のサイズを返します。いない場合は $ 0 $ です。
 
-- $ \mathtt { to \unicode {95} vec() } $: 値を順番に$ \mathtt { vector } $に入れて返します。
+- $ \mathtt { partition \unicode { 95 } point ( root, f )  } $ : 述語 $ f : \mathtt{ splay \unicode {95} node } \rightarrow \mathtt{ bool } $ を受け取り、 $ [ 0, i [ $ で $ \mathtt{ true } $ 、 $ [ i, \mathtt{ size } [ $ で $ \mathtt{ false } $ となるような $ i $ を返します。ただし区分化されている必要があります。
 
-- $ \mathtt { to \unicode {95} vec \unicode {95} with (f) } $: 関数$ f: \mathtt{ splay \unicode { 95 } node } \rightarrow T$ で射影した結果を$ \mathtt{ vector }$に入れて返します。
+- $ \mathtt { to \unicode {95} vec() } $ : 値を順番に $ \mathtt { vector } $ に入れて返します。
+
+- $ \mathtt { to \unicode {95} vec \unicode {95} with (f) } $ : 関数 $ f: \mathtt{ splay \unicode { 95 } node } \rightarrow T $ で射影した結果を $ \mathtt{ vector } $ に入れて返します。
 
 
 ### 更新
 
-- $ \mathtt { update() } $: $ \mathtt{ size } $と$ \mathtt{ acc }$ を更新です。子の情報が正しいとき、私の情報も正しくなります。
+- $ \mathtt { update() } $ : $ \mathtt{ size } $ と $ \mathtt{ acc } $ を更新です。子の情報が正しいとき、私の情報も正しくなります。
 
-- $ \mathtt { set(x) } $: 自分の値を$ x $にセットし、$ \mathtt{ update() }$を呼びます。
+- $ \mathtt { set(x) } $ : 自分の値を $ x $ にセットし、 $ \mathtt{ update() } $ を呼びます。
 
 
 ### 変形ロボとしての基本動作
 
-- $ \mathtt { rotate() } $: 回転をして、自分を一つ上に挙げます。親がいない場合は実行時エラーです。操作の終了語、親、自分の$ \mathtt { update() } $が呼ばれます。
+- $ \mathtt { rotate() } $ : 回転をして、自分を一つ上に挙げます。親がいない場合は実行時エラーです。操作の終了語、親、自分の $ \mathtt { update() } $ が呼ばれます。
 
-- $ \mathtt { splay() } $: 自分が根になるまで、自分や親の$ \mathtt { rotate() } $を呼び続けます。
+- $ \mathtt { splay() } $ : 自分が根になるまで、自分や親の $ \mathtt { rotate() } $ を呼び続けます。
 
 
 ### 平衡順序木の操作
 
-- $ \mathtt { get(i) } $: 自分の部分木のうち、ひだりから$ i $番目のものを探して根まで持っていき、それへのポインターを返します。
+- $ \mathtt { get(i) } $ : 自分の部分木のうち、ひだりから $ i $ 番目のものを探して根まで持っていき、それへのポインターを返します。
 
-- $ \mathtt { partition \unicode { 95 } point ( f ) } $: 述語 $f : \mathtt{ splay \unicode {95} node } \rightarrow \mathtt{ bool } $ を受け取り、$[ 0, i [ $で$ \mathtt{ true }$、$ [ i, \mathtt{ size } [ $で$ \mathtt{ false }$ となるような$ i $ を返します。ただし区分化されている必要があります。
+- $ \mathtt { partition \unicode { 95 } point ( f ) } $ : 述語 $ f : \mathtt{ splay \unicode {95} node } \rightarrow \mathtt{ bool } $ を受け取り、 $ [ 0, i [ $ で $ \mathtt{ true } $ 、 $ [ i, \mathtt{ size } [ $ で $ \mathtt{ false } $ となるような $ i $ を返します。ただし区分化されている必要があります。
 
-- $ \mathtt { merge(l, r) } $: $ r $の左下に$ l $をつけます。
+- $ \mathtt { merge(l, r) } $ : $ r $ の左下に $ l $ をつけます。
 
-- $ \mathtt { merge \unicode { 95 } from \unicode { 95 } three (l, c, r) }$: $r$ の左下に $c$、その左下に$l$をつけます。
+- $ \mathtt { merge \unicode { 95 } from \unicode { 95 } three (l, c, r) } $ : $ r $ の左下に $ c $ 、その左下に $ l $ をつけます。
 
-- $ \mathtt { split(i) } $: 自分の部分木を、左側$ i $個、右側$ \mathtt{ size } - i$個に分けます。どちらかが$ 0 $個になる場合は、そちらは$ \mathtt{ nullptr }$です。また$ \mathtt{ size } $よりも大きな$ i $を指定すると、実行時エラーです。
+- $ \mathtt { split(i) } $ : 自分の部分木を、左側 $ i $ 個、右側 $ \mathtt{ size } - i $ 個に分けます。どちらかが $ 0 $ 個になる場合は、そちらは $ \mathtt{ nullptr } $ です。また $ \mathtt{ size } $ よりも大きな $ i $ を指定すると、実行時エラーです。
 
-- $ \mathtt { split \unicode { 95 } into \unicode { 95 } three (l, r) }$: 同様に、$l$個、$r - l$個、$\mathtt{ size } - r$個に分けます。
+- $ \mathtt { split \unicode { 95 } into \unicode { 95 } three (l, r) } $ : 同様に、 $ l $ 個、 $ r - l $ 個、 $ \mathtt{ size } - r $ 個に分けます。
 
 
 ### 値の集約
 
-- $ \mathtt { fold(l, r) } $: 自分の部分木の中で$ [l, r[ $に対応する添字部分の値を集約します。添字がおかしいときには実行時エラーです。
+- $ \mathtt { fold(l, r) } $ : 自分の部分木の中で $ [l, r[ $ に対応する添字部分の値を集約します。添字がおかしいときには実行時エラーです。
 
 
-## 構造体 $ \mathtt { splay \unicode { 95 } tree } $
+## 構造体 $ \mathtt { splay \unicode { 95 } tree } $ 
 
-中身は$ \mathtt { unique \unicode { 95 } ptr  }$の$ \mathtt {vector}$ と、根の添字番号です。空のときには根は$ -1 $ ( = `std::numeric_limits<std::size_t>::max()`) になっています。
+中身は $ \mathtt { unique \unicode { 95 } ptr } $ の $ \mathtt {vector} $ と、根の添字番号です。空のときには根は $ -1 $ ( = `std::numeric_limits<std::size_t>::max()`) になっています。
 
 ### 構築
 
-- $ \mathtt { splay \unicode { 95 } tree (n) } $: $n$個のノードが左下から右上に向かって一直線になったスプレー木を構築します。ノードはデフォルト構築されたあと、$ \mathtt { merge } $が呼ばれます。
+- $ \mathtt { splay \unicode { 95 } tree () } $ : 引数 $ \mathtt { 0 } $ で下記のコンストラクタに移譲します。
 
-- $ \mathtt { splay \unicode { 95 } tree (a) } $: 値の入った$ \mathtt {vector} $を受け取り、スプレー木を構築します。
+- $ \mathtt { splay \unicode { 95 } tree (n) } $ : $ n $ 個のノードが左下から右上に向かって一直線になったスプレー木を構築します。ノードはデフォルト構築されたあと、 $ \mathtt { merge } $ が呼ばれます。
+
+- $ \mathtt { splay \unicode { 95 } tree (a) } $ : 値の入った $ \mathtt {vector} $ を受け取り、スプレー木を構築します。
 
 
-### オブザーバー（ $\mathtt{ const }$ がついているとは限りません。）
+### オブザーバー（ $ \mathtt{ const } $ がついているとは限りません。）
 
-- $ \mathtt{ empty() } $: 空ならば$ \mathtt { true } $です。
+- $ \mathtt{ empty() } $ : 空ならば $ \mathtt { true } $ です。
 
-- $ \mathtt{ size() } $: サイズを返します。
+- $ \mathtt{ size() } $ : サイズを返します。
 
-- $ \mathtt{ get(i) } $: $i$ 番目の値を返します。
+- $ \mathtt{ get(i) } $ : $ i $ 番目の値を返します。
 
-- $ \mathtt{ fold \unicode {95} all() }$: すべてを畳み込んだ値を返します。空ならば$ \mathtt { id }$ですし、空でなければ根の$ \mathtt { acc } $です。
+- $ \mathtt{ fold \unicode {95} all() } $ : すべてを畳み込んだ値を返します。空ならば $ \mathtt { id } $ ですし、空でなければ根の $ \mathtt { acc } $ です。
 
-- $ \mathtt{ fold(l, r) }$: 区間 $[l, r[$ を畳み込んだ値を返します。
+- $ \mathtt{ fold(l, r) } $ : 区間 $ [l, r[ $ を畳み込んだ値を返します。
 
-- $ \mathtt{ partion \unicode { 95 } point (f) } $: 空ならば$ 0 $です。空でなければ根の同名のメンバ関数を呼びます。
+- $ \mathtt{ partion \unicode { 95 } point (f) } $ : 空ならば $ 0 $ です。空でなければ根の同名のメンバ関数を呼びます。
 
-- $ \mathtt{ lower \unicode { 95 } bound (x, cmp=less) }$: ソート済みであるとして、値が$ x $以上の最も左の添字を返します。存在しない場合は$ \mathtt{ size } $を返します。内部では$ \mathtt { partition \unicode {95} point } $に転送をしています。
+- $ \mathtt{ lower \unicode { 95 } bound (x, cmp=less) } $ : ソート済みであるとして、値が $ x $ 以上の最も左の添字を返します。存在しない場合は $ \mathtt{ size } $ を返します。内部では $ \mathtt { partition \unicode {95} point } $ に転送をしています。
 
-- $ \mathtt{ upper \unicode { 95 } bound (x, cmp=less) }$: ソート済みであるとして、値が$ x $を超える最も左の添字を返します。存在しない場合は$ \mathtt{ size } $を返します。内部では$ \mathtt { partition \unicode {95} point } $に転送をしています。
+- $ \mathtt{ upper \unicode { 95 } bound (x, cmp=less) } $ : ソート済みであるとして、値が $ x $ を超える最も左の添字を返します。存在しない場合は $ \mathtt{ size } $ を返します。内部では $ \mathtt { partition \unicode {95} point } $ に転送をしています。
 
-- $ \mathtt{ to \unicode {95} vec() }$: 値を$ \mathtt{ vector }$にコレクトします。
+- $ \mathtt{ to \unicode {95} vec() } $ : 値を $ \mathtt{ vector } $ にコレクトします。
 
-- $ \mathtt{ to \unicode {95} vec \unicode {95 } with(f) }$: 関数$ f: \mathtt{ splay \unicode {95} node } \rightarrow T $で射影した結果を$ \mathtt { vector } $にコレクトです。
+- $ \mathtt{ to \unicode {95} vec \unicode {95 } with(f) } $ : 関数 $ f: \mathtt{ splay \unicode {95} node } \rightarrow T $ で射影した結果を $ \mathtt { vector } $ にコレクトです。
 
-### 更新
 
-- $ \mathtt{ set(i, x) } $: $ i $ 番目の値を$ x $にセットします。
+### 値の更新
 
-- $ \mathtt{ add(i, x) } $: $ i $ 番目の値を$ \mathtt{get}(i) + x $にセットします。
+- $ \mathtt{ set(i, x) } $ : $ i $ 番目の値を $ x $ にセットします。
 
-- $ \mathtt{ sub(i, x) } $: $ i $ 番目の値を$ \mathtt{get}(i) - x $にセットします。
+- $ \mathtt{ add(i, x) } $ : $ i $ 番目の値を $ \mathtt{get}(i) + x $ にセットします。
 
-- $ \mathtt{ mul(i, x) } $: $ i $ 番目の値を$ \mathtt{get}(i) * x $にセットします。
+- $ \mathtt{ sub(i, x) } $ : $ i $ 番目の値を $ \mathtt{get}(i) - x $ にセットします。
 
-- $ \mathtt{ div(i, x) } $: $ i $ 番目の値を$ \mathtt{get}(i) / x $にセットします。
+- $ \mathtt{ mul(i, x) } $ : $ i $ 番目の値を $ \mathtt{get}(i) * x $ にセットします。
 
-- $ \mathtt{ map(i, f) } $: $ i $ 番目の値を$ f(\mathtt{get}(i)) $にセットします。
+- $ \mathtt{ div(i, x) } $ : $ i $ 番目の値を $ \mathtt{get}(i) / x $ にセットします。
+
+- $ \mathtt{ map(i, f) } $ : $ i $ 番目の値を $ f(\mathtt{get}(i)) $ にセットします。
+
+
+### ノードの挿入と削除
+
+すべての挿入操作は、メモリプールに新しいノードを $ \mathtt { push \unicode { 95 } back } $ し、$ \mathtt { size \unicode { 95 } } $ を $ 1 $ 増加させます。
+
+すべての削除操作は、ノードを削除せず、$ \mathtt { size \unicode { 95 } } $ を $ 1 $ 減少させます。
+
+- $ \mathtt{ push \unicode { 95 } front( x ) } $ : 木の最も左に値 $ x $ を持つノードを追加します。
+
+- $ \mathtt{ push \unicode { 95 } back( x ) } $ : 木の最も右に値 $ x $ を持つノードを追加します。
+
+- $ \mathtt{ insert( i,  x ) } $ : 木の$ i $番目の位置に値 $ x $ を持つノードを追加します。
+
+- $ \mathtt{ pop \unicode { 95 } front() } $ : 木の最も左のノードを削除します。木が空のときには実行時エラーです。
+
+- $ \mathtt{ pop \unicode { 95 } back() } $ : 木の最も右のノードを削除します。木が空のときには実行時エラーです。
+
+- $ \mathtt{ erase( i ) } $ : 木の $ i $ 番目の位置のノードを削除します。範囲外のときには実行時エラーです。
+
+
+### 困りました。
+
+$ \mathtt { splice } $ はどう実装したらよいのでしょう。
+$ \mathtt { vector } $ さんに管理していたけるのは大変嬉しいのですが、あの、ちょっと、そこのあなた、
+勝手にデストラクタを呼ぶのをやめて頂けないとですね、私は答弁の方に集中できなくですね……
