@@ -31,7 +31,7 @@ layout: default
 
 * category: <a href="../../index.html#098f6bcd4621d373cade4e832627b4f6">test</a>
 * <a href="{{ site.github.repository_url }}/blob/master/test/aoj-grl-3-b.test.cpp">View this file on GitHub</a>
-    - Last commit date: 2020-05-10 16:48:30+09:00
+    - Last commit date: 2020-05-17 16:07:39+09:00
 
 
 * see: <a href="https://onlinejudge.u-aizu.ac.jp/courses/library/5/GRL/all/GRL_3_B">https://onlinejudge.u-aizu.ac.jp/courses/library/5/GRL/all/GRL_3_B</a>
@@ -40,6 +40,8 @@ layout: default
 ## Depends on
 
 * :heavy_check_mark: <a href="../../library/graph/connectivity/tec_component.hpp.html">2-辺連結成分分解 (Two-edges components)</a>
+* :heavy_check_mark: <a href="../../library/others/cstdint2.hpp.html">others/cstdint2.hpp</a>
+* :heavy_check_mark: <a href="../../library/others/vec.hpp.html">others/vec.hpp</a>
 
 
 ## Code
@@ -99,81 +101,81 @@ int main(){
 #line 2 "graph/connectivity/tec_component.hpp"
 
 #include <cassert>
-#line 8 "graph/connectivity/tec_component.hpp"
+#line 9 "graph/connectivity/tec_component.hpp"
 
-class tec_component
-{
-public:
-    std::vector<std::vector<std::size_t>> g;
-    std::vector<std::size_t> ord, low, ckd, cmp;
+#line 2 "others/cstdint2.hpp"
 
-    std::vector<std::vector<std::size_t>> bfree_graph;
-    std::vector<std::pair<std::size_t, std::size_t>> bridges;
+#include <cstdint>
 
-    std::size_t count;
+using i32 = std::int_least32_t;
+using i64 = std::int_least64_t;
+using u32 = std::uint_least32_t;
+using u64 = std::uint_least64_t;
+using usize = std::size_t;
+#line 1 "others/vec.hpp"
+template <class T> using vec = std::vector<T>;
+#line 12 "graph/connectivity/tec_component.hpp"
 
-private:
-    void tec_internal_cmn(std::size_t& i, std::size_t j) { if (i>j) i=j; }
+/*
+ * @title 2-辺連結成分分解 (Two-edges components)
+ * @see [Wikipedia k-edge-connected graph](https://en.wikipedia.org/wiki/K-edge-connected_graph)
+ * @docs graph/connectivity/tec_component.md
+ */
 
-    void found_bridge(std::size_t i, std::size_t j) {
-        if (i>j) std::swap(i, j);
-        bridges.emplace_back(i, j);
-    }
+class tec_component {
+    bool built;
 
-    void found_non_bridge(std::size_t i, std::size_t j) {
-        bfree_graph.at(i).push_back(j);
-        bfree_graph.at(j).push_back(i);
-    }
-
-    void dfs(std::size_t x, std::size_t p, std::size_t t) {
+    // 1 回目の DFS
+    // 計算するもの: ord, low, bridges
+    // precondition: ckd = 0
+    // post-condition: ckd = 2
+    void low_link_dfs(usize x, usize p, usize& t) {
         auto&& v = g.at(x);
-        ord.at(x) = low.at(x) = t;
+        ord.at(x) = low.at(x) = t++;
         ckd.at(x) = 1;
 
-        // 自己ループは後退辺扱いです。
-        if (std::find(v.begin(), v.end(), x) != v.end()) {
-            found_non_bridge(x, x);
-        }
-
-        // 親は 2 人いる場合のみ後退辺扱いです。
+        // 親への多重辺
         if (2u <= std::count(v.begin(), v.end(), p)) {
-            tec_internal_cmn(low.at(x), ord.at(p));
-            found_non_bridge(x, p);
+            if (low.at(x) > ord.at(p)) low.at(x) = ord.at(p);
         }
 
-        for (std::size_t y : v) {
+        for (usize y : v) {
             // 未訪問の場合です。
             if (ckd.at(y)==0u) {
-                dfs(y, x, t+1);
+                low_link_dfs(y, x, t);
                 // 橋を見つけました。
                 if (ord.at(x) < low.at(y)) {
-                    found_bridge(x, y);
-                // 橋でないものを見つけました。
+                    bridges.emplace_back(std::min(x, y), std::max(x, y));
                 } else {
-                    tec_internal_cmn(low.at(x), low.at(y));
-                    found_non_bridge(x, y);
+                    if (low.at(x) > low.at(y)) low.at(x) = low.at(y);
                 }
-
             // 後退辺です。
             } else if (y!=p && ckd.at(y)==1u) {
-                tec_internal_cmn(low.at(x), ord.at(y));
-                // 後退辺は橋ではありません。
-                found_non_bridge(x, y);
+                if (low.at(x) > ord.at(y)) low.at(x) = ord.at(y);
             }
         }
         ckd.at(x) = 2;
     }
 
-    void efs(std::size_t x) {
-        ckd.at(x) = 3u;
-        for (std::size_t y : bfree_graph.at(x)) {
-            if (ckd.at(y)==3u) continue;
-            cmp.at(y) = cmp.at(x);
-            efs(y);
+    // 2 回目の DFS
+    // 計算するも: cmp
+    // precondition: cmp = size()
+    // post-condition: cmp が計算済み
+    void cmp_dfs(usize x) {
+        for (usize y : g.at(x)) if (cmp.at(y)==size()) {
+            cmp.at(y) = ord.at(x)<low.at(y)? ++count : cmp.at(x);
+            cmp_dfs(y);
         }
     }
 
 public:
+    vec<vec<usize>> g;
+    vec<usize> ord, low, ckd, cmp;
+
+    vec<std::pair<usize, usize>> bridges;
+
+    usize count;
+
     tec_component()=default;
     tec_component(tec_component const&)=default;
     tec_component(tec_component&&)=default;
@@ -181,41 +183,59 @@ public:
     tec_component& operator=(tec_component&&)=default;
     ~tec_component()=default;
 
-    tec_component(std::size_t n)
-        : g(n), ord(n), low(n), ckd(n), cmp(n), bfree_graph(n), count(0)
+    tec_component(vec<vec<usize>> const& g_)
+        : tec_component(g_.size())
+    {
+        g = g_;
+    }
+
+    tec_component(usize n)
+        : built(false), g(n), ord(n), low(n), ckd(n), cmp(n, n), count(0)
     {}
 
-    std::size_t size() const { return g.size(); }
-
-    void insert(std::size_t i, std::size_t j) {
-        assert(std::size_t{ 0 } <= i && i < size());
-        assert(std::size_t{ 0 } <= j && j < size());
+    void insert(usize i, usize j) {
+        assert(usize{ 0 } <= i && i < size());
+        assert(usize{ 0 } <= j && j < size());
         g.at(i).push_back(j);
         g.at(j).push_back(i);
     }
 
-    void build() {
-        assert(size());
 
-        for (std::size_t i=0; i<size(); i++) {
-            dfs(i, 0, 0);
+    usize size() const { return g.size(); }
+
+    void build() {
+        assert(built == false);
+        built = true;
+
+        for (usize i=0, t=0; i<size(); i++) if (ckd.at(i)==0) {
+            low_link_dfs(i, 0, t);
         }
 
-        assert(std::all_of(std::begin(ckd), std::end(ckd), [](std::size_t x){ return x==2; }));
+        assert(std::all_of(std::begin(ckd), std::end(ckd), [](usize x){ return x==2; }));
 
-        for (std::size_t i=0; i<size(); i++) {
-            if (ckd.at(i)==3u) continue;
-            cmp.at(i) = count++;
-            efs(i);
+        for (usize i=0; i<size(); i++) if (cmp.at(i)==size()) {
+            cmp.at(i) = count;
+            cmp_dfs(i);
+            count++;
         }
     }
-};
 
-/*
- * @title 2-辺連結成分分解 (Two-edges components)
- * @see [Wikipedia k-edge-connected graph](https://en.wikipedia.org/wiki/K-edge-connected_graph)
- * @docs graph/connectivity/tec_component.md
- */
+    vec<vec<usize>> quotient_graph() {
+        if (!built) build();
+        vec<vec<usize>> h(count);
+
+        for (auto&& e: bridges) {
+            usize u, v;
+            std::tie(u, v) = e;
+            u = cmp.at(u);
+            v = cmp.at(v);
+
+            h.at(u).push_back(v);
+            h.at(v).push_back(u);
+        }
+        return h;
+    }
+};
 #line 11 "test/aoj-grl-3-b.test.cpp"
 
 int main(){

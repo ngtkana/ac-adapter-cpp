@@ -25,34 +25,27 @@ layout: default
 <link rel="stylesheet" href="../../assets/css/copy-button.css" />
 
 
-# :heavy_check_mark: others/cstdint2.hpp
+# :heavy_check_mark: others/vec.hpp
 
 <a href="../../index.html">Back to top page</a>
 
 * category: <a href="../../index.html#5e2bab0ecb94c4ea40777733195abe1b">others</a>
-* <a href="{{ site.github.repository_url }}/blob/master/others/cstdint2.hpp">View this file on GitHub</a>
-    - Last commit date: 2020-05-12 20:04:26+09:00
+* <a href="{{ site.github.repository_url }}/blob/master/others/vec.hpp">View this file on GitHub</a>
+    - Last commit date: 2020-05-16 17:47:01+09:00
 
 
 
 
 ## Required by
 
-* :heavy_check_mark: <a href="../bbst/splay_tree.hpp.html">スプレー木 (Splay tree)</a>
 * :heavy_check_mark: <a href="../graph/connectivity/tec_component.hpp.html">2-辺連結成分分解 (Two-edges components)</a>
 * :heavy_check_mark: <a href="../graph/tree/tree_diameter.hpp.html">木の直径 (Diameer of tree)</a>
 
 
 ## Verified with
 
-* :heavy_check_mark: <a href="../../verify/test/aoj-alds1-4-b.test.cpp.html">test/aoj-alds1-4-b.test.cpp</a>
-* :heavy_check_mark: <a href="../../verify/test/aoj-grl-2-a.test.cpp.html">test/aoj-grl-2-a.test.cpp</a>
-* :heavy_check_mark: <a href="../../verify/test/aoj-grl-2-b.test.cpp.html">test/aoj-grl-2-b.test.cpp</a>
 * :heavy_check_mark: <a href="../../verify/test/aoj-grl-3-b.test.cpp.html">test/aoj-grl-3-b.test.cpp</a>
 * :heavy_check_mark: <a href="../../verify/test/aoj-grl-5-a.test.cpp.html">test/aoj-grl-5-a.test.cpp</a>
-* :heavy_check_mark: <a href="../../verify/test/aoj-itp2-1-a.test.cpp.html">test/aoj-itp2-1-a.test.cpp</a>
-* :heavy_check_mark: <a href="../../verify/test/aoj-itp2-1-b.test.cpp.html">test/aoj-itp2-1-b.test.cpp</a>
-* :heavy_check_mark: <a href="../../verify/test/aoj-itp2-1-c.test.cpp.html">test/aoj-itp2-1-c.test.cpp</a>
 * :heavy_check_mark: <a href="../../verify/test/yosupo-two-edge-connected-components.test.cpp.html">test/yosupo-two-edge-connected-components.test.cpp</a>
 
 
@@ -61,15 +54,7 @@ layout: default
 <a id="unbundled"></a>
 {% raw %}
 ```cpp
-#pragma once
-
-#include <cstdint>
-
-using i32 = std::int_least32_t;
-using i64 = std::int_least64_t;
-using u32 = std::uint_least32_t;
-using u64 = std::uint_least64_t;
-using usize = std::size_t;
+template <class T> using vec = std::vector<T>;
 
 ```
 {% endraw %}
@@ -77,15 +62,8 @@ using usize = std::size_t;
 <a id="bundled"></a>
 {% raw %}
 ```cpp
-#line 2 "others/cstdint2.hpp"
-
-#include <cstdint>
-
-using i32 = std::int_least32_t;
-using i64 = std::int_least64_t;
-using u32 = std::uint_least32_t;
-using u64 = std::uint_least64_t;
-using usize = std::size_t;
+#line 1 "others/vec.hpp"
+template <class T> using vec = std::vector<T>;
 
 ```
 {% endraw %}
