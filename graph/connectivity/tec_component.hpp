@@ -77,11 +77,15 @@ public:
     tec_component& operator=(tec_component&&)=default;
     ~tec_component()=default;
 
+    tec_component(vec<vec<usize>> const& g_)
+        : tec_component(g_.size())
+    {
+        g = g_;
+    }
+
     tec_component(usize n)
         : built(false), g(n), ord(n), low(n), ckd(n), cmp(n, n), count(0)
     {}
-
-    usize size() const { return g.size(); }
 
     void insert(usize i, usize j) {
         assert(usize{ 0 } <= i && i < size());
@@ -89,6 +93,9 @@ public:
         g.at(i).push_back(j);
         g.at(j).push_back(i);
     }
+
+
+    usize size() const { return g.size(); }
 
     void build() {
         assert(built == false);
