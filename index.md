@@ -91,7 +91,7 @@ layout: default
 
 ### integral
 
-* :heavy_check_mark: <a href="library/integral/mint.hpp.html">mint</a>
+* :heavy_check_mark: <a href="library/integral/mint.hpp.html">integral/mint.hpp</a>
 * :heavy_check_mark: <a href="library/integral/nt_trsf.hpp.html">NTT</a>
 
 

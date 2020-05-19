@@ -31,7 +31,7 @@ layout: default
 
 * category: <a href="../../index.html#098f6bcd4621d373cade4e832627b4f6">test</a>
 * <a href="{{ site.github.repository_url }}/blob/master/test/yosupo-convolution_mod.test.cpp">View this file on GitHub</a>
-    - Last commit date: 2020-05-09 08:49:57+00:00
+    - Last commit date: 2020-05-19 22:51:25+09:00
 
 
 * see: <a href="https://judge.yosupo.jp/problem/convolution_mod">https://judge.yosupo.jp/problem/convolution_mod</a>
@@ -39,8 +39,9 @@ layout: default
 
 ## Depends on
 
-* :heavy_check_mark: <a href="../../library/integral/mint.hpp.html">mint</a>
+* :heavy_check_mark: <a href="../../library/integral/mint.hpp.html">integral/mint.hpp</a>
 * :heavy_check_mark: <a href="../../library/integral/nt_trsf.hpp.html">NTT</a>
+* :heavy_check_mark: <a href="../../library/others/cstdint2.hpp.html">others/cstdint2.hpp</a>
 
 
 ## Code
@@ -56,6 +57,8 @@ layout: default
 #include <cassert>
 
 int main(){
+    nt_trsf::mint_type::mod_type::value = 998244353;
+
     nt_trsf ntt;
 
     std::size_t n, m;
@@ -94,10 +97,23 @@ int main(){
 #include <type_traits>
 #include <iostream>
 
+#line 2 "others/cstdint2.hpp"
+
+#include <cstdint>
+
+using i32 = std::int_least32_t;
+using i64 = std::int_least64_t;
+using u32 = std::uint_least32_t;
+using u64 = std::uint_least64_t;
+using usize = std::size_t;
+#line 11 "integral/mint.hpp"
+
 template <class ModType> struct modint {
     using value_type = typename ModType::value_type;
     using mint = modint<ModType>;
-    static value_type mod() { return ModType::value; }
+    using mod_type = ModType;
+
+    static value_type& mod() { return ModType::value; }
 
 private:
     static value_type inverse(value_type x) {
@@ -226,13 +242,14 @@ template <class T, class U> modint<T> operator/(U x, modint<T> y) { return modin
 template <class T, class U> bool operator==(U x, modint<T> y) { return modint<T>(x)==y; }
 template <class T, class U> bool operator!=(U x, modint<T> y) { return modint<T>(x)!=y; }
 
-using mod_type = int;
-constexpr mod_type mod = 998244353;
-using mint = modint< std::integral_constant<mod_type, mod> >;
+struct mod_type {
+    using value_type = i32;
+    static value_type value;
+};
 
-/*
- * @title mint
- */
+mod_type::value_type mod_type::value;
+
+using mint = modint<mod_type>;
 #line 4 "integral/nt_trsf.hpp"
 
 #include <array>
@@ -341,6 +358,8 @@ struct nt_trsf {
 #line 7 "test/yosupo-convolution_mod.test.cpp"
 
 int main(){
+    nt_trsf::mint_type::mod_type::value = 998244353;
+
     nt_trsf ntt;
 
     std::size_t n, m;

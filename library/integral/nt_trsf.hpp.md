@@ -31,14 +31,15 @@ layout: default
 
 * category: <a href="../../index.html#25aa2761448ea05599418ee93dd1d5c5">integral</a>
 * <a href="{{ site.github.repository_url }}/blob/master/integral/nt_trsf.hpp">View this file on GitHub</a>
-    - Last commit date: 2020-05-09 08:49:57+00:00
+    - Last commit date: 2020-05-19 22:51:25+09:00
 
 
 
 
 ## Depends on
 
-* :heavy_check_mark: <a href="mint.hpp.html">mint</a>
+* :heavy_check_mark: <a href="mint.hpp.html">integral/mint.hpp</a>
+* :heavy_check_mark: <a href="../others/cstdint2.hpp.html">others/cstdint2.hpp</a>
 
 
 ## Verified with
@@ -174,10 +175,23 @@ struct nt_trsf {
 #include <type_traits>
 #include <iostream>
 
+#line 2 "others/cstdint2.hpp"
+
+#include <cstdint>
+
+using i32 = std::int_least32_t;
+using i64 = std::int_least64_t;
+using u32 = std::uint_least32_t;
+using u64 = std::uint_least64_t;
+using usize = std::size_t;
+#line 11 "integral/mint.hpp"
+
 template <class ModType> struct modint {
     using value_type = typename ModType::value_type;
     using mint = modint<ModType>;
-    static value_type mod() { return ModType::value; }
+    using mod_type = ModType;
+
+    static value_type& mod() { return ModType::value; }
 
 private:
     static value_type inverse(value_type x) {
@@ -306,13 +320,14 @@ template <class T, class U> modint<T> operator/(U x, modint<T> y) { return modin
 template <class T, class U> bool operator==(U x, modint<T> y) { return modint<T>(x)==y; }
 template <class T, class U> bool operator!=(U x, modint<T> y) { return modint<T>(x)!=y; }
 
-using mod_type = int;
-constexpr mod_type mod = 998244353;
-using mint = modint< std::integral_constant<mod_type, mod> >;
+struct mod_type {
+    using value_type = i32;
+    static value_type value;
+};
 
-/*
- * @title mint
- */
+mod_type::value_type mod_type::value;
+
+using mint = modint<mod_type>;
 #line 4 "integral/nt_trsf.hpp"
 
 #include <array>
