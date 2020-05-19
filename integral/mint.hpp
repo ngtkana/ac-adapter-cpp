@@ -7,10 +7,14 @@
 #include <type_traits>
 #include <iostream>
 
+#include "../others/cstdint2.hpp"
+
 template <class ModType> struct modint {
     using value_type = typename ModType::value_type;
     using mint = modint<ModType>;
-    static value_type mod() { return ModType::value; }
+    using mod_type = ModType;
+
+    static value_type& mod() { return ModType::value; }
 
 private:
     static value_type inverse(value_type x) {
@@ -139,10 +143,11 @@ template <class T, class U> modint<T> operator/(U x, modint<T> y) { return modin
 template <class T, class U> bool operator==(U x, modint<T> y) { return modint<T>(x)==y; }
 template <class T, class U> bool operator!=(U x, modint<T> y) { return modint<T>(x)!=y; }
 
-using mod_type = int;
-constexpr mod_type mod = 998244353;
-using mint = modint< std::integral_constant<mod_type, mod> >;
+struct mod_type {
+    using value_type = i32;
+    static value_type value;
+};
 
-/*
- * @title mint
- */
+mod_type::value_type mod_type::value;
+
+using mint = modint<mod_type>;

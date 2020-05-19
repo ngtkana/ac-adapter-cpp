@@ -6,6 +6,8 @@
 #include <cassert>
 
 int main(){
+    nt_trsf::mint_type::mod_type::value = 998244353;
+
     nt_trsf ntt;
 
     std::size_t n, m;
