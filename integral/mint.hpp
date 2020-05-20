@@ -14,9 +14,9 @@ template <class ModType> struct modint {
     using mint = modint<ModType>;
     using mod_type = ModType;
 
-    static value_type& mod() { return ModType::value; }
+    static value_type mod() { return ModType::value; }
 
-private:
+    private:
     static value_type inverse(value_type x) {
         value_type y=1,u=mod(),v=0;
         while(x){
@@ -28,7 +28,7 @@ private:
         return v<0?v+mod():v;
     }
 
-public:
+    public:
     // the member variable
     value_type value;
 
@@ -108,7 +108,7 @@ public:
     }
 };
 
-template <class T> std::istream&
+    template <class T> std::istream&
 operator>>(std::istream& is, modint<T>& x)
 {
     typename modint<T>::value_type y;
@@ -116,7 +116,7 @@ operator>>(std::istream& is, modint<T>& x)
     x = modint<T>{ y };
     return is;
 }
-template <class T> std::ostream&
+    template <class T> std::ostream&
 operator<<(std::ostream& os, modint<T> x)
 {
     return os << x.value;
@@ -142,12 +142,3 @@ template <class T, class U> modint<T> operator*(U x, modint<T> y) { return modin
 template <class T, class U> modint<T> operator/(U x, modint<T> y) { return modint<T>(x)/y; }
 template <class T, class U> bool operator==(U x, modint<T> y) { return modint<T>(x)==y; }
 template <class T, class U> bool operator!=(U x, modint<T> y) { return modint<T>(x)!=y; }
-
-struct mod_type {
-    using value_type = i32;
-    static value_type value;
-};
-
-mod_type::value_type mod_type::value;
-
-using mint = modint<mod_type>;

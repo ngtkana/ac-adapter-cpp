@@ -5,10 +5,10 @@
 #include <iostream>
 #include <cassert>
 
-int main(){
-    nt_trsf::mint_type::mod_type::value = 998244353;
+using mint = modint<std::integral_constant<i32, 998244353>>;
 
-    nt_trsf ntt;
+int main(){
+    nt_trsf<mint> ntt;
 
     std::size_t n, m;
     std::cin >> n >> m;
