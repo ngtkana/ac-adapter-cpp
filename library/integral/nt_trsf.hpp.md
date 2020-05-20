@@ -31,7 +31,7 @@ layout: default
 
 * category: <a href="../../index.html#25aa2761448ea05599418ee93dd1d5c5">integral</a>
 * <a href="{{ site.github.repository_url }}/blob/master/integral/nt_trsf.hpp">View this file on GitHub</a>
-    - Last commit date: 2020-05-19 22:51:25+09:00
+    - Last commit date: 2020-05-21 00:58:47+09:00
 
 
 
@@ -61,8 +61,10 @@ layout: default
 #include <cstddef>
 #include <limits>
 
+template <class Mint>
 struct nt_trsf {
-    using mint_type = mint;
+    using mint_type = Mint;
+    using value_type = typename mint_type::value_type;
 
     std::array<std::vector<mint_type>, 2> table;
 
@@ -72,7 +74,7 @@ struct nt_trsf {
         std::size_t period = (mod()-1) & (-mod()+1);
         std::size_t lg = std::numeric_limits<std::size_t>::digits - __builtin_clzll(period) - 1;
 
-        mint root = 2;
+        mint_type root = 2;
         for (; root.pow(period)!=1 || root.pow(period>>1)==1; root++);
 
         for (std::size_t i=0; i<2; i++) {
@@ -92,7 +94,7 @@ struct nt_trsf {
     nt_trsf& operator=(nt_trsf&&)=default;
     ~nt_trsf()=default;
 
-    static mint_type::value_type mod() { return mint_type::mod(); }
+    static value_type mod() { return mint_type::mod(); }
 
     static bool is_pow_of_2(std::size_t n) { return (n & (n-1)) == 0; }
 
@@ -147,8 +149,8 @@ struct nt_trsf {
 
         for (; !a.empty() && a.back() == 0; a.pop_back());
 
-        mint scale = mint::inv(sz);
-        for (mint& x : a) x *= scale;
+        mint_type scale = mint_type::inv(sz);
+        for (mint_type& x : a) x *= scale;
         return a;
     }
 };
@@ -191,9 +193,9 @@ template <class ModType> struct modint {
     using mint = modint<ModType>;
     using mod_type = ModType;
 
-    static value_type& mod() { return ModType::value; }
+    static value_type mod() { return ModType::value; }
 
-private:
+    private:
     static value_type inverse(value_type x) {
         value_type y=1,u=mod(),v=0;
         while(x){
@@ -205,7 +207,7 @@ private:
         return v<0?v+mod():v;
     }
 
-public:
+    public:
     // the member variable
     value_type value;
 
@@ -285,7 +287,7 @@ public:
     }
 };
 
-template <class T> std::istream&
+    template <class T> std::istream&
 operator>>(std::istream& is, modint<T>& x)
 {
     typename modint<T>::value_type y;
@@ -293,7 +295,7 @@ operator>>(std::istream& is, modint<T>& x)
     x = modint<T>{ y };
     return is;
 }
-template <class T> std::ostream&
+    template <class T> std::ostream&
 operator<<(std::ostream& os, modint<T> x)
 {
     return os << x.value;
@@ -319,15 +321,6 @@ template <class T, class U> modint<T> operator*(U x, modint<T> y) { return modin
 template <class T, class U> modint<T> operator/(U x, modint<T> y) { return modint<T>(x)/y; }
 template <class T, class U> bool operator==(U x, modint<T> y) { return modint<T>(x)==y; }
 template <class T, class U> bool operator!=(U x, modint<T> y) { return modint<T>(x)!=y; }
-
-struct mod_type {
-    using value_type = i32;
-    static value_type value;
-};
-
-mod_type::value_type mod_type::value;
-
-using mint = modint<mod_type>;
 #line 4 "integral/nt_trsf.hpp"
 
 #include <array>
@@ -335,8 +328,10 @@ using mint = modint<mod_type>;
 #line 8 "integral/nt_trsf.hpp"
 #include <limits>
 
+template <class Mint>
 struct nt_trsf {
-    using mint_type = mint;
+    using mint_type = Mint;
+    using value_type = typename mint_type::value_type;
 
     std::array<std::vector<mint_type>, 2> table;
 
@@ -346,7 +341,7 @@ struct nt_trsf {
         std::size_t period = (mod()-1) & (-mod()+1);
         std::size_t lg = std::numeric_limits<std::size_t>::digits - __builtin_clzll(period) - 1;
 
-        mint root = 2;
+        mint_type root = 2;
         for (; root.pow(period)!=1 || root.pow(period>>1)==1; root++);
 
         for (std::size_t i=0; i<2; i++) {
@@ -366,7 +361,7 @@ struct nt_trsf {
     nt_trsf& operator=(nt_trsf&&)=default;
     ~nt_trsf()=default;
 
-    static mint_type::value_type mod() { return mint_type::mod(); }
+    static value_type mod() { return mint_type::mod(); }
 
     static bool is_pow_of_2(std::size_t n) { return (n & (n-1)) == 0; }
 
@@ -421,8 +416,8 @@ struct nt_trsf {
 
         for (; !a.empty() && a.back() == 0; a.pop_back());
 
-        mint scale = mint::inv(sz);
-        for (mint& x : a) x *= scale;
+        mint_type scale = mint_type::inv(sz);
+        for (mint_type& x : a) x *= scale;
         return a;
     }
 };
