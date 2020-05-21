@@ -31,7 +31,7 @@ layout: default
 
 * category: <a href="../../../index.html#419122d444c505324448ed1b2f731265">graph/connectivity</a>
 * <a href="{{ site.github.repository_url }}/blob/master/graph/connectivity/tec_component.hpp">View this file on GitHub</a>
-    - Last commit date: 2020-05-17 16:07:39+09:00
+    - Last commit date: 2020-05-22 00:36:51+09:00
 
 
 * see: <a href="[Wikipedia k-edge-connected graph](https://en.wikipedia.org/wiki/K-edge-connected_graph)">[Wikipedia k-edge-connected graph](https://en.wikipedia.org/wiki/K-edge-connected_graph)</a>
@@ -264,7 +264,14 @@ using u32 = std::uint_least32_t;
 using u64 = std::uint_least64_t;
 using usize = std::size_t;
 #line 1 "others/vec.hpp"
+
+
+
+#line 5 "others/vec.hpp"
+
 template <class T> using vec = std::vector<T>;
+
+
 #line 12 "graph/connectivity/tec_component.hpp"
 
 /*

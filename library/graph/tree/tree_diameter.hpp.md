@@ -31,7 +31,7 @@ layout: default
 
 * category: <a href="../../../index.html#28790b6202284cbbffc9d712b59f4b80">graph/tree</a>
 * <a href="{{ site.github.repository_url }}/blob/master/graph/tree/tree_diameter.hpp">View this file on GitHub</a>
-    - Last commit date: 2020-05-17 15:55:45+09:00
+    - Last commit date: 2020-05-22 00:36:51+09:00
 
 
 * see: <a href="https://onlinejudge.u-aizu.ac.jp/courses/library/5/GRL/all/GRL_5_A">https://onlinejudge.u-aizu.ac.jp/courses/library/5/GRL/all/GRL_5_A</a>
