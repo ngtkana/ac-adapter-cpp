@@ -31,7 +31,7 @@ layout: default
 
 * category: <a href="../../index.html#5e2bab0ecb94c4ea40777733195abe1b">others</a>
 * <a href="{{ site.github.repository_url }}/blob/master/others/cartesian_tree.yosupo-aplusb.test.cpp">View this file on GitHub</a>
-    - Last commit date: 2020-05-22 00:44:05+09:00
+    - Last commit date: 2020-05-22 00:53:09+09:00
 
 
 * see: <a href="https://judge.yosupo.jp/problem/aplusb">https://judge.yosupo.jp/problem/aplusb</a>
@@ -104,7 +104,7 @@ template <class T> using vec = std::vector<T>;
 #line 1 "others/cartesian_tree.hpp"
 /*
  * @title カルテシアン木 (Cartesian Tree)
- * @docs others/cartesian_tree.hpp
+ * @docs others/cartesian_tree.md
  */
 
 #include <utility>

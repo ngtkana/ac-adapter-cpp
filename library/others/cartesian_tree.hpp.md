@@ -31,9 +31,23 @@ layout: default
 
 * category: <a href="../../index.html#5e2bab0ecb94c4ea40777733195abe1b">others</a>
 * <a href="{{ site.github.repository_url }}/blob/master/others/cartesian_tree.hpp">View this file on GitHub</a>
-    - Last commit date: 2020-05-22 00:44:05+09:00
+    - Last commit date: 2020-05-22 00:53:09+09:00
 
 
+
+
+## 仕様
+
+列を受け取ります。
+小さいほうが値になるようなカルテシアン木を構築します。
+根と、有向木の子リストによる表現のペアを返却します。
+
+等しいものがあるときには、添字の小さいものが根側に来ます。
+
+
+## きっかけ
+
+[AGC 005 B - Minimum Sum](https://atcoder.jp/contests/agc005/tasks/agc005_b)
 
 
 ## Depends on
@@ -54,7 +68,7 @@ layout: default
 ```cpp
 /*
  * @title カルテシアン木 (Cartesian Tree)
- * @docs others/cartesian_tree.hpp
+ * @docs others/cartesian_tree.md
  */
 
 #include <utility>
@@ -104,7 +118,7 @@ auto cartesian_tree(vec<T> const& a, Comp const& comp={}) {
 #line 1 "others/cartesian_tree.hpp"
 /*
  * @title カルテシアン木 (Cartesian Tree)
- * @docs others/cartesian_tree.hpp
+ * @docs others/cartesian_tree.md
  */
 
 #include <utility>
