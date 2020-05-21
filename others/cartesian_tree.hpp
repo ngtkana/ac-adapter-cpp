@@ -1,6 +1,6 @@
 /*
  * @title カルテシアン木 (Cartesian Tree)
- * @docs others/cartesian_tree.hpp
+ * @docs others/cartesian_tree.md
  */
 
 #include <utility>
