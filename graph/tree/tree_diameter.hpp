@@ -42,10 +42,11 @@ class tree_diameter {
     using adapter_type = tree_diameter_adapter<Weight>;
     using edge_type = typename adapter_type::edge_type;
     using weight_type = typename adapter_type::weight_type;
+    using this_type = tree_diameter<Weight>;
 
     bool built = false;
 
-    weight_type inf() { return std::numeric_limits<weight_type>::max(); }
+    static weight_type inf() { return std::numeric_limits<weight_type>::max(); }
 
 public:
     vec<vec<edge_type>> g;
@@ -62,7 +63,6 @@ public:
     tree_diameter(usize n)
         : g(n), dist(n) {}
 
-    // FIXME: 実装の注入で書き直せそうです。
     void insert_with_weight(usize u, usize v, Weight w) {
         assert(u < size());
         assert(v < size());
@@ -70,7 +70,6 @@ public:
         g.at(v).emplace_back(u, w);
     }
 
-    // FIXME: 実装の注入で書き直せそうです。
     void insert_without_weight(usize u, usize v) {
         assert(u < size());
         assert(v < size());
@@ -80,13 +79,11 @@ public:
 
     tree_diameter(vec<vec<edge_type>> const& g_)
         : g(g_), dist(g_.size())
-    {
-        build();
-    }
+    {}
 
     usize size() const { return g.size(); }
 
-    void build(usize s_ = 0) {
+    this_type& build(usize s_ = 0) {
         assert(!built);
         built = true;
         s = s_;
@@ -106,22 +103,52 @@ public:
             t = std::max_element(dist.begin(), dist.end()) - dist.begin();
             std::swap(s, t);
         }
+        return *this;
     }
 
-    weight_type len() {
-        if (!built) build();
+    // これちょっと雑かもです。
+    this_type& build(usize s_, vec<usize> const& dead) {
+        assert(!built);
+        assert(dead.size()==size());
+        assert(!dead.at(s_));
+        built = true;
+        s = s_;
+
+        for (usize i=0; i<2; i++) {
+            dist.assign(size(), inf());
+            dist.at(s) = 0;
+            vec<usize> que = {s};
+
+            for (usize j=0; j<que.size(); j++) {
+                usize x = que.at(j);
+                for (auto&& e: g.at(x)) if (dist.at(adapter_type::to(e))==inf() && !dead.at(adapter_type::to(e))) {
+                    dist.at(adapter_type::to(e)) = dist.at(x) + adapter_type::weight(e);
+                    que.push_back(adapter_type::to(e));
+                }
+            }
+            t = s;
+            for (usize j=0; j<size(); j++) if (dist.at(j)!=inf()) {
+                if (dist.at(t) < dist.at(j)) t = j;
+            }
+            std::swap(s, t);
+        }
+        return *this;
+    }
+
+    weight_type len() const {
+        assert(built);
         assert(dist.at(t)==0 && dist.at(s)!=inf());
         return dist.at(s);
     }
 
-    std::pair<usize, usize> extremals()  {
-        if (!built) build();
+    std::pair<usize, usize> extremals() const {
+        assert(built);
         assert(dist.at(t)==0 && dist.at(s)!=inf());
         return std::make_pair(s, t);
     }
 
-    vec<usize> verticies() {
-        if (!built) build();
+    vec<usize> verticies() const {
+        assert(built);
          vec<usize> ans = {s};
          while (ans.back()!=t) {
              auto&& v = g.at(ans.back());
@@ -140,11 +167,10 @@ public:
          assert(ans.size()==len()+1);
          assert([&]{
              for (usize i=0; i<=len(); i++) {
-                 assert(i==dist.at(ans.at(i)));
+                 assert(i==len()-dist.at(ans.at(i)));
              }
              return true;
          }());
          return ans;
     }
 };
-

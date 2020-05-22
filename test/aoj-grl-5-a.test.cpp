@@ -16,5 +16,5 @@ int main() {
         td.insert_with_weight(u, v, w);
     }
 
-    std::cout << td.len() << '\n';
+    std::cout << td.build().len() << '\n';
 }
