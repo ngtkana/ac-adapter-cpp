@@ -1,5 +1,6 @@
 {
 "others/cartesian_tree.yosupo-aplusb.test.cpp": "2020-05-22 00:53:09 +0900",
+"others/permutations.yosupo-aplusb.test.cpp": "2020-05-23 12:30:39 +0900",
 "test/aoj-alds1-4-b.test.cpp": "2020-05-12 20:29:34 +0900",
 "test/aoj-dsl-2-a.test.cpp": "2020-05-11 23:59:36 +0900",
 "test/aoj-dsl-2-b.test.cpp": "2020-05-11 23:59:36 +0900",
@@ -7,7 +8,7 @@
 "test/aoj-grl-2-a.test.cpp": "2020-05-12 20:29:34 +0900",
 "test/aoj-grl-2-b.test.cpp": "2020-05-12 20:29:34 +0900",
 "test/aoj-grl-3-b.test.cpp": "2020-05-22 00:36:51 +0900",
-"test/aoj-grl-5-a.test.cpp": "2020-05-22 00:36:51 +0900",
+"test/aoj-grl-5-a.test.cpp": "2020-05-23 02:06:19 +0900",
 "test/aoj-grl-5-c.test.cpp": "2020-05-10 14:04:05 +0900",
 "test/aoj-grl-5-d.test.cpp": "2020-05-11 20:28:07 +0900",
 "test/aoj-grl-6-a-1.test.cpp": "2020-05-03 15:19:38 +0900",
