@@ -25,22 +25,22 @@ layout: default
 <link rel="stylesheet" href="../../assets/css/copy-button.css" />
 
 
-# :heavy_check_mark: test/aoj-grl-5-a.test.cpp
+# :heavy_check_mark: others/permutations.yosupo-aplusb.test.cpp
 
 <a href="../../index.html">Back to top page</a>
 
-* category: <a href="../../index.html#098f6bcd4621d373cade4e832627b4f6">test</a>
-* <a href="{{ site.github.repository_url }}/blob/master/test/aoj-grl-5-a.test.cpp">View this file on GitHub</a>
-    - Last commit date: 2020-05-23 02:06:19+09:00
+* category: <a href="../../index.html#5e2bab0ecb94c4ea40777733195abe1b">others</a>
+* <a href="{{ site.github.repository_url }}/blob/master/others/permutations.yosupo-aplusb.test.cpp">View this file on GitHub</a>
+    - Last commit date: 2020-05-23 12:30:39+09:00
 
 
-* see: <a href="https://onlinejudge.u-aizu.ac.jp/courses/library/5/GRL/all/GRL_5_A">https://onlinejudge.u-aizu.ac.jp/courses/library/5/GRL/all/GRL_5_A</a>
+* see: <a href="https://judge.yosupo.jp/problem/aplusb">https://judge.yosupo.jp/problem/aplusb</a>
 
 
 ## Depends on
 
-* :heavy_check_mark: <a href="../../library/graph/tree/tree_diameter.hpp.html">木の直径 (Diameer of tree)</a>
 * :heavy_check_mark: <a href="../../library/others/cstdint2.hpp.html">others/cstdint2.hpp</a>
+* :heavy_check_mark: <a href="../../library/others/permutations.hpp.html">置換 (permutations)</a>
 * :heavy_check_mark: <a href="../../library/others/vec.hpp.html">others/vec.hpp</a>
 
 
@@ -49,25 +49,47 @@ layout: default
 <a id="unbundled"></a>
 {% raw %}
 ```cpp
-#include <cstddef>
-#include <iostream>
+#define PROBLEM "https://judge.yosupo.jp/problem/aplusb"
 
-#include "../graph/tree/tree_diameter.hpp"
+#include <cassert>
+#include <iostream>
+#include <random>
+
+#include "cstdint2.hpp"
+#include "vec.hpp"
+#include "permutations.hpp"
 
 int main() {
-    usize n;
-    std::cin >> n;
+    std::mt19937 mt{ std::random_device{}()} ;
 
-    tree_diameter<i64> td(n);
-    for (usize i=0; i<n-1; i++) {
-        usize u, v;
-        i64 w;
-        std::cin >> u >> v >> w;
+    auto iota = [](usize n) {
+        vec<usize> a(n);
+        std::iota(a.begin(), a.end(), 0u);
+        return a;
+    };
 
-        td.insert_with_weight(u, v, w);
+    auto generate_random_permutation = [&mt, &iota] (usize n) {
+        vec<usize> a = iota(n);
+        std::shuffle(a.begin(), a.end(), mt);
+        return a;
+    };
+
+    for (usize ph=0; ph<20; ph++) {
+        usize n = 50;
+        auto i = iota(n);
+        auto a = generate_random_permutation(n);
+        auto b = generate_random_permutation(n);
+
+        assert(i == permutations::mul(a, permutations::inv(a)));
+
+        auto ba = permutations::mul(b, a);
+        permutations::mul_assign_from_the_right(a, b);
+        assert(ba == a);
     }
 
-    std::cout << td.build().len() << '\n';
+    i32 x, y;
+    std::cin >> x >> y;
+    std::cout << x + y << '\n';
 }
 
 ```
@@ -83,9 +105,9 @@ Traceback (most recent call last):
     bundler.update(path)
   File "/opt/hostedtoolcache/Python/3.8.3/x64/lib/python3.8/site-packages/onlinejudge_verify/languages/cplusplus_bundle.py", line 282, in update
     self.update(self._resolve(pathlib.Path(included), included_from=path))
-  File "/opt/hostedtoolcache/Python/3.8.3/x64/lib/python3.8/site-packages/onlinejudge_verify/languages/cplusplus_bundle.py", line 214, in update
-    raise BundleError(path, i + 1, "#pragma once found in a non-first line")
-onlinejudge_verify.languages.cplusplus_bundle.BundleError: graph/tree/tree_diameter.hpp: line 6: #pragma once found in a non-first line
+  File "/opt/hostedtoolcache/Python/3.8.3/x64/lib/python3.8/site-packages/onlinejudge_verify/languages/cplusplus_bundle.py", line 281, in update
+    raise BundleError(path, i + 1, "unable to process #include in #if / #ifdef / #ifndef other than include guards")
+onlinejudge_verify.languages.cplusplus_bundle.BundleError: others/permutations.hpp: line 12: unable to process #include in #if / #ifdef / #ifndef other than include guards
 
 ```
 {% endraw %}

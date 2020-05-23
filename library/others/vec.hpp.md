@@ -41,11 +41,13 @@ layout: default
 * :heavy_check_mark: <a href="../graph/connectivity/tec_component.hpp.html">2-辺連結成分分解 (Two-edges components)</a>
 * :heavy_check_mark: <a href="../graph/tree/tree_diameter.hpp.html">木の直径 (Diameer of tree)</a>
 * :heavy_check_mark: <a href="cartesian_tree.hpp.html">カルテシアン木 (Cartesian Tree)</a>
+* :heavy_check_mark: <a href="permutations.hpp.html">置換 (permutations)</a>
 
 
 ## Verified with
 
 * :heavy_check_mark: <a href="../../verify/others/cartesian_tree.yosupo-aplusb.test.cpp.html">others/cartesian_tree.yosupo-aplusb.test.cpp</a>
+* :heavy_check_mark: <a href="../../verify/others/permutations.yosupo-aplusb.test.cpp.html">others/permutations.yosupo-aplusb.test.cpp</a>
 * :heavy_check_mark: <a href="../../verify/test/aoj-grl-3-b.test.cpp.html">test/aoj-grl-3-b.test.cpp</a>
 * :heavy_check_mark: <a href="../../verify/test/aoj-grl-5-a.test.cpp.html">test/aoj-grl-5-a.test.cpp</a>
 * :heavy_check_mark: <a href="../../verify/test/yosupo-two-edge-connected-components.test.cpp.html">test/yosupo-two-edge-connected-components.test.cpp</a>
