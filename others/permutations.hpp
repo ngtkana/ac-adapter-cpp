@@ -47,6 +47,27 @@ struct permutations {
         }
         return ans;
     }
+
+    static u64 merge_sort(vec<usize>& a) {
+        if (a.size() <= 1u) return 0u;
+        vec<usize> b(a.begin(), a.begin()+a.size()/2), c(a.begin()+a.size()/2, a.end());
+        u64 ans = merge_sort(b) + merge_sort(c);
+        for (usize i=0, j=0; i<b.size() || j<c.size(); ) {
+            if (j==c.size() || (i<b.size() && b.at(i) < c.at(j))) {
+                a.at(i+j) = b.at(i);
+                i++;
+            } else {
+                ans += b.size() - i;
+                a.at(i+j) = c.at(j);
+                j++;
+            }
+        }
+        return ans;
+    }
+
+    static u64 inversion_number(vec<usize> a) {
+        return merge_sort(a);
+    }
 };
 
 #endif
