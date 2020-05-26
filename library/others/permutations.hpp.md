@@ -31,7 +31,7 @@ layout: default
 
 * category: <a href="../../index.html#5e2bab0ecb94c4ea40777733195abe1b">others</a>
 * <a href="{{ site.github.repository_url }}/blob/master/others/permutations.hpp">View this file on GitHub</a>
-    - Last commit date: 2020-05-23 12:30:39+09:00
+    - Last commit date: 2020-05-27 03:31:33+09:00
 
 
 
@@ -113,6 +113,27 @@ struct permutations {
         }
         return ans;
     }
+
+    static u64 merge_sort(vec<usize>& a) {
+        if (a.size() <= 1u) return 0u;
+        vec<usize> b(a.begin(), a.begin()+a.size()/2), c(a.begin()+a.size()/2, a.end());
+        u64 ans = merge_sort(b) + merge_sort(c);
+        for (usize i=0, j=0; i<b.size() || j<c.size(); ) {
+            if (j==c.size() || (i<b.size() && b.at(i) < c.at(j))) {
+                a.at(i+j) = b.at(i);
+                i++;
+            } else {
+                ans += b.size() - i;
+                a.at(i+j) = c.at(j);
+                j++;
+            }
+        }
+        return ans;
+    }
+
+    static u64 inversion_number(vec<usize> a) {
+        return merge_sort(a);
+    }
 };
 
 #endif
@@ -127,11 +148,11 @@ struct permutations {
 Traceback (most recent call last):
   File "/opt/hostedtoolcache/Python/3.8.3/x64/lib/python3.8/site-packages/onlinejudge_verify/docs.py", line 349, in write_contents
     bundled_code = language.bundle(self.file_class.file_path, basedir=pathlib.Path.cwd())
-  File "/opt/hostedtoolcache/Python/3.8.3/x64/lib/python3.8/site-packages/onlinejudge_verify/languages/cplusplus.py", line 172, in bundle
+  File "/opt/hostedtoolcache/Python/3.8.3/x64/lib/python3.8/site-packages/onlinejudge_verify/languages/cplusplus.py", line 185, in bundle
     bundler.update(path)
-  File "/opt/hostedtoolcache/Python/3.8.3/x64/lib/python3.8/site-packages/onlinejudge_verify/languages/cplusplus_bundle.py", line 281, in update
-    raise BundleError(path, i + 1, "unable to process #include in #if / #ifdef / #ifndef other than include guards")
-onlinejudge_verify.languages.cplusplus_bundle.BundleError: others/permutations.hpp: line 12: unable to process #include in #if / #ifdef / #ifndef other than include guards
+  File "/opt/hostedtoolcache/Python/3.8.3/x64/lib/python3.8/site-packages/onlinejudge_verify/languages/cplusplus_bundle.py", line 306, in update
+    raise BundleErrorAt(path, i + 1, "unable to process #include in #if / #ifdef / #ifndef other than include guards")
+onlinejudge_verify.languages.cplusplus_bundle.BundleErrorAt: others/permutations.hpp: line 12: unable to process #include in #if / #ifdef / #ifndef other than include guards
 
 ```
 {% endraw %}
