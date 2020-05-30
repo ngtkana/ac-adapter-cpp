@@ -31,7 +31,7 @@ layout: default
 
 * category: <a href="../../index.html#b45cffe084dd3d20d928bee85e7b0f21">string</a>
 * <a href="{{ site.github.repository_url }}/blob/master/string/z_algorithm.hpp">View this file on GitHub</a>
-    - Last commit date: 2020-05-09 23:03:06+09:00
+    - Last commit date: 2020-05-30 17:55:01+09:00
 
 
 * see: <a href="https://snuke.hatenablog.com/entry/2014/12/03/214243">https://snuke.hatenablog.com/entry/2014/12/03/214243</a>
@@ -41,11 +41,15 @@ layout: default
 
 ## 仕様
 
-文字列 s 対して、Z 配列を求めます。定義は
+文字列 <var>s</var> の Z 配列 <var>a</var> を求めます。
 
-$ z _ i = \max \left\{ j \in [ i, { \rm len } (s) ] : s _ { k - i } = s _ { k } \ ( \forall k \in [i, j[ ) \right\} - i $
+$ 0 \le i \lt n $ に対して、$ a _ i $ は $ s $ と $ s [ i, n [ $ の最長共通接頭辞長です。
 
-です。
+
+## Depends on
+
+* :heavy_check_mark: <a href="../others/cstdint2.hpp.html">others/cstdint2.hpp</a>
+* :heavy_check_mark: <a href="../others/vec.hpp.html">others/vec.hpp</a>
 
 
 ## Verified with
@@ -60,8 +64,9 @@ $ z _ i = \max \left\{ j \in [ i, { \rm len } (s) ] : s _ { k - i } = s _ { k } 
 ```cpp
 #pragma once
 
-#include <cstddef>
-#include <vector>
+#include "../others/vec.hpp"
+#include "../others/cstdint2.hpp"
+
 /*
  * @brief Z algorithm
  * @docs string/z_algorithm.md
@@ -71,33 +76,19 @@ $ z _ i = \max \left\{ j \in [ i, { \rm len } (s) ] : s _ { k - i } = s _ { k } 
  */
 
 template <class Container, class=typename Container::value_type>
-std::vector<std::size_t> z_algorhthm (Container const& s)
-{
-    std::vector<std::size_t> z(s.size());
-
-    if (s.empty()) {
-        return z;
-    }
-
-    for (std::size_t i=1, j=0; i<s.size(); ) {
-        for (; i+j<s.size() && s.at(j)==s.at(i+j); j++);
-        z.at(i) = j;
-
-        if (j==0) {
-            i++;
-            continue;
+std::vector<usize> z_algorithm (Container const& s) {
+    vec<usize> a(s.length());
+    if (s.empty()) return a;
+    a.at(0) = s.length();
+    for (usize i=1, j=1, k; i<s.length(); i=k) {
+        for (; j<s.length() && s.at(j-i)==s.at(j); j++);
+        a.at(i) = j-i;
+        if (j==i) j++;
+        for (k=i+1; k<j && k+a.at(k-i)!=j; k++) {
+            a.at(k) = std::min(j-k, a.at(k-i));
         }
-
-        std::size_t k=1;
-        for (; i+k<s.size() && k+z.at(k)<j; k++) {
-            z.at(i+k) = z.at(k);
-        }
-        i += k;
-        j -= k;
     }
-    z.at(0) = s.size();
-
-    return z;
+    return a;
 }
 
 ```
@@ -108,8 +99,26 @@ std::vector<std::size_t> z_algorhthm (Container const& s)
 ```cpp
 #line 2 "string/z_algorithm.hpp"
 
-#include <cstddef>
+#line 1 "others/vec.hpp"
+
+
+
 #include <vector>
+
+template <class T> using vec = std::vector<T>;
+
+
+#line 2 "others/cstdint2.hpp"
+
+#include <cstdint>
+
+using i32 = std::int_least32_t;
+using i64 = std::int_least64_t;
+using u32 = std::uint_least32_t;
+using u64 = std::uint_least64_t;
+using usize = std::size_t;
+#line 5 "string/z_algorithm.hpp"
+
 /*
  * @brief Z algorithm
  * @docs string/z_algorithm.md
@@ -119,33 +128,19 @@ std::vector<std::size_t> z_algorhthm (Container const& s)
  */
 
 template <class Container, class=typename Container::value_type>
-std::vector<std::size_t> z_algorhthm (Container const& s)
-{
-    std::vector<std::size_t> z(s.size());
-
-    if (s.empty()) {
-        return z;
-    }
-
-    for (std::size_t i=1, j=0; i<s.size(); ) {
-        for (; i+j<s.size() && s.at(j)==s.at(i+j); j++);
-        z.at(i) = j;
-
-        if (j==0) {
-            i++;
-            continue;
+std::vector<usize> z_algorithm (Container const& s) {
+    vec<usize> a(s.length());
+    if (s.empty()) return a;
+    a.at(0) = s.length();
+    for (usize i=1, j=1, k; i<s.length(); i=k) {
+        for (; j<s.length() && s.at(j-i)==s.at(j); j++);
+        a.at(i) = j-i;
+        if (j==i) j++;
+        for (k=i+1; k<j && k+a.at(k-i)!=j; k++) {
+            a.at(k) = std::min(j-k, a.at(k-i));
         }
-
-        std::size_t k=1;
-        for (; i+k<s.size() && k+z.at(k)<j; k++) {
-            z.at(i+k) = z.at(k);
-        }
-        i += k;
-        j -= k;
     }
-    z.at(0) = s.size();
-
-    return z;
+    return a;
 }
 
 ```

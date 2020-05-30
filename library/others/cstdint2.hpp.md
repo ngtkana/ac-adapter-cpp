@@ -44,7 +44,9 @@ layout: default
 * :heavy_check_mark: <a href="../integral/mint.hpp.html">integral/mint.hpp</a>
 * :heavy_check_mark: <a href="../integral/nt_trsf.hpp.html">NTT</a>
 * :heavy_check_mark: <a href="cartesian_tree.hpp.html">カルテシアン木 (Cartesian Tree)</a>
+* :warning: <a href="incremental_sum.hpp.html">others/incremental_sum.hpp</a>
 * :heavy_check_mark: <a href="permutations.hpp.html">置換 (permutations)</a>
+* :heavy_check_mark: <a href="../string/z_algorithm.hpp.html">Z algorithm <small>(string/z_algorithm.hpp)</small></a>
 
 
 ## Verified with
@@ -61,6 +63,7 @@ layout: default
 * :heavy_check_mark: <a href="../../verify/test/aoj-itp2-1-c.test.cpp.html">test/aoj-itp2-1-c.test.cpp</a>
 * :heavy_check_mark: <a href="../../verify/test/yosupo-convolution_mod.test.cpp.html">test/yosupo-convolution_mod.test.cpp</a>
 * :heavy_check_mark: <a href="../../verify/test/yosupo-two-edge-connected-components.test.cpp.html">test/yosupo-two-edge-connected-components.test.cpp</a>
+* :heavy_check_mark: <a href="../../verify/test/yosupo-zalgorithm.test.cpp.html">test/yosupo-zalgorithm.test.cpp</a>
 
 
 ## Code

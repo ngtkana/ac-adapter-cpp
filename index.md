@@ -101,6 +101,7 @@ layout: default
 
 * :heavy_check_mark: <a href="library/others/cartesian_tree.hpp.html">カルテシアン木 (Cartesian Tree)</a>
 * :heavy_check_mark: <a href="library/others/cstdint2.hpp.html">others/cstdint2.hpp</a>
+* :warning: <a href="library/others/incremental_sum.hpp.html">others/incremental_sum.hpp</a>
 * :heavy_check_mark: <a href="library/others/permutations.hpp.html">置換 (permutations)</a>
 * :heavy_check_mark: <a href="library/others/vec.hpp.html">others/vec.hpp</a>
 
