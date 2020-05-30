@@ -1,7 +1,5 @@
 ## 仕様
 
-文字列 s 対して、Z 配列を求めます。定義は
+文字列 <var>s</var> の Z 配列 <var>a</var> を求めます。
 
-$ z _ i = \max \left\{ j \in [ i, { \rm len } (s) ] : s _ { k - i } = s _ { k } \ ( \forall k \in [i, j[ ) \right\} - i $
-
-です。
+$ 0 \le i \lt n $ に対して、$ a _ i $ は $ s $ と $ s [ i, n [ $ の最長共通接頭辞長です。

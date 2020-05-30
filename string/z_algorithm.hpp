@@ -1,7 +1,8 @@
 #pragma once
 
-#include <cstddef>
-#include <vector>
+#include "../others/vec.hpp"
+#include "../others/cstdint2.hpp"
+
 /*
  * @brief Z algorithm
  * @docs string/z_algorithm.md
@@ -11,31 +12,17 @@
  */
 
 template <class Container, class=typename Container::value_type>
-std::vector<std::size_t> z_algorhthm (Container const& s)
-{
-    std::vector<std::size_t> z(s.size());
-
-    if (s.empty()) {
-        return z;
-    }
-
-    for (std::size_t i=1, j=0; i<s.size(); ) {
-        for (; i+j<s.size() && s.at(j)==s.at(i+j); j++);
-        z.at(i) = j;
-
-        if (j==0) {
-            i++;
-            continue;
+std::vector<usize> z_algorithm (Container const& s) {
+    vec<usize> a(s.length());
+    if (s.empty()) return a;
+    a.at(0) = s.length();
+    for (usize i=1, j=1, k; i<s.length(); i=k) {
+        for (; j<s.length() && s.at(j-i)==s.at(j); j++);
+        a.at(i) = j-i;
+        if (j==i) j++;
+        for (k=i+1; k<j && k+a.at(k-i)!=j; k++) {
+            a.at(k) = std::min(j-k, a.at(k-i));
         }
-
-        std::size_t k=1;
-        for (; i+k<s.size() && k+z.at(k)<j; k++) {
-            z.at(i+k) = z.at(k);
-        }
-        i += k;
-        j -= k;
     }
-    z.at(0) = s.size();
-
-    return z;
+    return a;
 }
