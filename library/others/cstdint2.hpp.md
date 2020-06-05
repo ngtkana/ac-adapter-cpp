@@ -43,6 +43,7 @@ layout: default
 * :heavy_check_mark: <a href="../graph/tree/tree_diameter.hpp.html">木の直径 (Diameer of tree)</a>
 * :heavy_check_mark: <a href="../integral/mint.hpp.html">integral/mint.hpp</a>
 * :heavy_check_mark: <a href="../integral/nt_trsf.hpp.html">NTT</a>
+* :heavy_check_mark: <a href="../integral/residual_polynomials.hpp.html">剰余多項式 (residual polynomials)</a>
 * :heavy_check_mark: <a href="cartesian_tree.hpp.html">カルテシアン木 (Cartesian Tree)</a>
 * :warning: <a href="incremental_sum.hpp.html">others/incremental_sum.hpp</a>
 * :heavy_check_mark: <a href="permutations.hpp.html">置換 (permutations)</a>
@@ -51,6 +52,7 @@ layout: default
 
 ## Verified with
 
+* :heavy_check_mark: <a href="../../verify/integral/residual_polynomials.test.cpp.html">integral/residual_polynomials.test.cpp</a>
 * :heavy_check_mark: <a href="../../verify/others/cartesian_tree.yosupo-aplusb.test.cpp.html">others/cartesian_tree.yosupo-aplusb.test.cpp</a>
 * :heavy_check_mark: <a href="../../verify/others/permutations.yosupo-aplusb.test.cpp.html">others/permutations.yosupo-aplusb.test.cpp</a>
 * :heavy_check_mark: <a href="../../verify/test/aoj-alds1-4-b.test.cpp.html">test/aoj-alds1-4-b.test.cpp</a>

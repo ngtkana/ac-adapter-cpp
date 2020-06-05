@@ -25,21 +25,24 @@ layout: default
 <link rel="stylesheet" href="../../assets/css/copy-button.css" />
 
 
-# :heavy_check_mark: test/aoj-dsl-2-a.test.cpp
+# :heavy_check_mark: integral/residual_polynomials.test.cpp
 
 <a href="../../index.html">Back to top page</a>
 
-* category: <a href="../../index.html#098f6bcd4621d373cade4e832627b4f6">test</a>
-* <a href="{{ site.github.repository_url }}/blob/master/test/aoj-dsl-2-a.test.cpp">View this file on GitHub</a>
-    - Last commit date: 2020-06-06 02:59:26+09:00
+* category: <a href="../../index.html#25aa2761448ea05599418ee93dd1d5c5">integral</a>
+* <a href="{{ site.github.repository_url }}/blob/master/integral/residual_polynomials.test.cpp">View this file on GitHub</a>
+    - Last commit date: 2020-06-06 03:45:57+09:00
 
 
-* see: <a href="https://onlinejudge.u-aizu.ac.jp/courses/library/3/DSL/all/DSL_2_A">https://onlinejudge.u-aizu.ac.jp/courses/library/3/DSL/all/DSL_2_A</a>
+* see: <a href="https://judge.yosupo.jp/problem/aplusb">https://judge.yosupo.jp/problem/aplusb</a>
 
 
 ## Depends on
 
-* :heavy_check_mark: <a href="../../library/segtree/segtree.hpp.html">セグメント木 (segtree)</a>
+* :heavy_check_mark: <a href="../../library/integral/mint.hpp.html">integral/mint.hpp</a>
+* :heavy_check_mark: <a href="../../library/integral/residual_polynomials.hpp.html">剰余多項式 (residual polynomials)</a>
+* :heavy_check_mark: <a href="../../library/others/cstdint2.hpp.html">others/cstdint2.hpp</a>
+* :heavy_check_mark: <a href="../../library/others/vec.hpp.html">others/vec.hpp</a>
 
 
 ## Code
@@ -47,46 +50,24 @@ layout: default
 <a id="unbundled"></a>
 {% raw %}
 ```cpp
-#define PROBLEM "https://onlinejudge.u-aizu.ac.jp/courses/library/3/DSL/all/DSL_2_A"
+#define PROBLEM "https://judge.yosupo.jp/problem/aplusb"
 
-#include <cstddef>
-#include <iostream>
+#include <type_traits>
 
-#include "../segtree/segtree.hpp"
+#include "../others/vec.hpp"
+#include "../others/cstdint2.hpp"
+#include "mint.hpp"
+#include "residual_polynomials.hpp"
 
-template <class Value>
-struct min_monoid_t {
-    using value_type = Value;
-    static value_type op(value_type l, value_type r) { return std::min(l, r); }
-    static const value_type id() { return std::numeric_limits<Value>::max(); }
-};
+using mint = modint<std::integral_constant<i64, 1'000'000'007>>;
 
 int main() {
-    std::size_t n, q;
-    std::cin >> n >> q;
+    vec<mint> f{2, 3, 4};
+    resudual_polynomials<mint> rp(f);
 
-    segtree<min_monoid_t<int>> seg(n, (1ll<<31)-1);
-
-    while (q--) {
-        int c;
-        std::cin >> c;
-
-        if (c==0) {
-            std::size_t i;
-            int x;
-            std::cin >> i >> x;
-
-            seg.set(i, x);
-        }
-
-        if (c==1) {
-            std::size_t l, r;
-            std::cin >> l >> r;
-            r++;
-
-            std::cout << seg.fold(l, r) << '\n';
-        }
-    }
+    u32 a, b;
+    std::cin >> a >> b;
+    std::cout << a + b << '\n';
 }
 
 ```
@@ -104,7 +85,7 @@ Traceback (most recent call last):
     self.update(self._resolve(pathlib.Path(included), included_from=path))
   File "/opt/hostedtoolcache/Python/3.8.3/x64/lib/python3.8/site-packages/onlinejudge_verify/languages/cplusplus_bundle.py", line 239, in update
     raise BundleErrorAt(path, i + 1, "#pragma once found in a non-first line")
-onlinejudge_verify.languages.cplusplus_bundle.BundleErrorAt: segtree/segtree.hpp: line 6: #pragma once found in a non-first line
+onlinejudge_verify.languages.cplusplus_bundle.BundleErrorAt: integral/residual_polynomials.hpp: line 6: #pragma once found in a non-first line
 
 ```
 {% endraw %}

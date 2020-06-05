@@ -93,6 +93,7 @@ layout: default
 
 * :heavy_check_mark: <a href="library/integral/mint.hpp.html">integral/mint.hpp</a>
 * :heavy_check_mark: <a href="library/integral/nt_trsf.hpp.html">NTT</a>
+* :heavy_check_mark: <a href="library/integral/residual_polynomials.hpp.html">剰余多項式 (residual polynomials)</a>
 
 
 <div id="5e2bab0ecb94c4ea40777733195abe1b"></div>
@@ -123,6 +124,7 @@ layout: default
 
 ## Verify Files
 
+* :heavy_check_mark: <a href="verify/integral/residual_polynomials.test.cpp.html">integral/residual_polynomials.test.cpp</a>
 * :heavy_check_mark: <a href="verify/others/cartesian_tree.yosupo-aplusb.test.cpp.html">others/cartesian_tree.yosupo-aplusb.test.cpp</a>
 * :heavy_check_mark: <a href="verify/others/permutations.yosupo-aplusb.test.cpp.html">others/permutations.yosupo-aplusb.test.cpp</a>
 * :heavy_check_mark: <a href="verify/test/aoj-alds1-4-b.test.cpp.html">test/aoj-alds1-4-b.test.cpp</a>

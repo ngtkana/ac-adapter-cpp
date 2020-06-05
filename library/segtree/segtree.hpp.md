@@ -31,7 +31,7 @@ layout: default
 
 * category: <a href="../../index.html#eae30ef778b4136fdcc54087b7400598">segtree</a>
 * <a href="{{ site.github.repository_url }}/blob/master/segtree/segtree.hpp">View this file on GitHub</a>
-    - Last commit date: 2020-05-11 23:59:36+09:00
+    - Last commit date: 2020-06-06 02:59:26+09:00
 
 
 
@@ -98,8 +98,7 @@ layout: default
 #include <algorithm>
 
 template <class Monoid>
-struct segtree
-{
+struct segtree {
     using value_type = typename Monoid::value_type;
 
     std::vector<value_type> table;
