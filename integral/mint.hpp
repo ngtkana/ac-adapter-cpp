@@ -70,8 +70,9 @@ template <class ModType> struct modint {
 
     mint& operator++() { return *this+=1; }
     mint& operator--() { return *this-=1; }
-    mint  operator++(int) { mint this_=*this; ++*this; return this_; }
-    mint  operator--(int) { mint this_=*this; --*this; return this_; }
+    mint operator++(int) { mint this_=*this; ++*this; return this_; }
+    mint operator--(int) { mint this_=*this; --*this; return this_; }
+    mint operator-() const { return 0 - *this; }
 
     // static member functions
     static mint inv(mint x) { return inverse(x.value); }
@@ -95,12 +96,14 @@ template <class ModType> struct modint {
     mint& inv_assign()       { return *this = inv(*this); }
     mint& pow_assign(unsigned long long y){ return *this = pow(*this, y); }
 
-    mint add(mint y) { mint ans=*this; return ans.add_assign(y); }
-    mint sub(mint y) { mint ans=*this; return ans.sub_assign(y); }
-    mint mul(mint y) { mint ans=*this; return ans.mul_assign(y); }
-    mint div(mint y) { mint ans=*this; return ans.div_assign(y); }
-    mint inv()       { mint ans=*this; return ans.inv_assign(); }
-    mint pow(unsigned long long y) { return pow(*this, y); }
+    mint add(mint y) const { mint ans=*this; return ans.add_assign(y); }
+    mint sub(mint y) const { mint ans=*this; return ans.sub_assign(y); }
+    mint mul(mint y) const { mint ans=*this; return ans.mul_assign(y); }
+    mint div(mint y) const { mint ans=*this; return ans.div_assign(y); }
+    mint inv()       const { mint ans=*this; return ans.inv_assign(); }
+    mint pow(unsigned long long y) const { return pow(*this, y); }
+    mint square(mint x) const { return *this * *this; }
+    mint cube(mint x) const { return *this * *this * *this; }
 
     template <class F> mint map(F const& f){
         value=f(value);
@@ -108,17 +111,15 @@ template <class ModType> struct modint {
     }
 };
 
-    template <class T> std::istream&
-operator>>(std::istream& is, modint<T>& x)
-{
+template <class T> std::istream&
+operator>>(std::istream& is, modint<T>& x) {
     typename modint<T>::value_type y;
     is >> y;
     x = modint<T>{ y };
     return is;
 }
-    template <class T> std::ostream&
-operator<<(std::ostream& os, modint<T> x)
-{
+template <class T> std::ostream&
+operator<<(std::ostream& os, modint<T> x) {
     return os << x.value;
 }
 

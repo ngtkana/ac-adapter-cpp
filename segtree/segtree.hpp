@@ -11,8 +11,7 @@
 #include <algorithm>
 
 template <class Monoid>
-struct segtree
-{
+struct segtree {
     using value_type = typename Monoid::value_type;
 
     std::vector<value_type> table;
