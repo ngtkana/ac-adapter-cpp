@@ -1,6 +1,6 @@
 /*
  * @title 剰余多項式 (residual polynomials)
- * @docs integral/residual/polynomials
+ * @docs integral/residual_polynomials.md
  */
 
 #pragma once
