@@ -31,7 +31,7 @@ layout: default
 
 * category: <a href="../../index.html#25aa2761448ea05599418ee93dd1d5c5">integral</a>
 * <a href="{{ site.github.repository_url }}/blob/master/integral/residual_polynomials.test.cpp">View this file on GitHub</a>
-    - Last commit date: 2020-06-06 03:45:57+09:00
+    - Last commit date: 2020-06-06 12:44:57+09:00
 
 
 * see: <a href="https://judge.yosupo.jp/problem/aplusb">https://judge.yosupo.jp/problem/aplusb</a>
