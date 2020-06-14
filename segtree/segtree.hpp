@@ -75,6 +75,8 @@ struct segtree {
     void sub(std::size_t i, value_type x) { set(i, get(i) - x); }
     void mul(std::size_t i, value_type x) { set(i, get(i) * x); }
     void div(std::size_t i, value_type x) { set(i, get(i) / x); }
+    void cmn(std::size_t i, value_type x) { set(i, std::min(get(i), x)); }
+    void cmx(std::size_t i, value_type x) { set(i, std::max(get(i), x)); }
 
     template <class F> void map(std::size_t i, F const& f) { set(i, f(get(i))); }
 };
