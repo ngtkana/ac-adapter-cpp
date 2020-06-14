@@ -31,7 +31,7 @@ layout: default
 
 * category: <a href="../../index.html#eae30ef778b4136fdcc54087b7400598">segtree</a>
 * <a href="{{ site.github.repository_url }}/blob/master/segtree/segtree.hpp">View this file on GitHub</a>
-    - Last commit date: 2020-06-06 02:59:26+09:00
+    - Last commit date: 2020-06-15 03:44:51+09:00
 
 
 
@@ -162,6 +162,8 @@ struct segtree {
     void sub(std::size_t i, value_type x) { set(i, get(i) - x); }
     void mul(std::size_t i, value_type x) { set(i, get(i) * x); }
     void div(std::size_t i, value_type x) { set(i, get(i) / x); }
+    void cmn(std::size_t i, value_type x) { set(i, std::min(get(i), x)); }
+    void cmx(std::size_t i, value_type x) { set(i, std::max(get(i), x)); }
 
     template <class F> void map(std::size_t i, F const& f) { set(i, f(get(i))); }
 };
